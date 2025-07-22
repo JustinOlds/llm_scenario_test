@@ -1,0 +1,121 @@
+# LLM Testing Framework Configuration
+# test_parameters.yaml
+
+# Test Questions
+test_questions:
+  primary: "Which of my locations need immediate attention and what specific actions should I take?"
+  secondary: "What products should I focus on to improve sales at my underperforming locations?"
+  tertiary: "How do my top and bottom performing locations compare, and what can I learn from the differences?"
+
+# Data Files
+data_files:
+  curated: "data/curated/weekly_summaries_2025_w29.csv"
+  source: "data/source/daily_sales_2025_w29.csv"
+  
+# Test Conditions
+conditions:
+  condition_1:
+    name: "Source Data + Minimal Guidance"
+    data_type: "source"
+    guidance_type: "minimal"
+    description: "Daily operational data with basic prompting"
+    
+  condition_2:
+    name: "Source Data + Enhanced Guidance"  
+    data_type: "source"
+    guidance_type: "enhanced"
+    description: "Daily operational data with business context"
+    
+  condition_3:
+    name: "Curated Data + Minimal Guidance"
+    data_type: "curated" 
+    guidance_type: "minimal"
+    description: "Weekly summaries with basic prompting"
+    
+  condition_4:
+    name: "Curated Data + Enhanced Guidance"
+    data_type: "curated"
+    guidance_type: "enhanced" 
+    description: "Weekly summaries with business context"
+
+# Claude API Settings
+api_settings:
+  model: "claude-3-5-sonnet-20241022"
+  max_tokens: 4000
+  temperature: 0.1
+  timeout: 60
+  
+# Token Limits and Estimates
+token_estimates:
+  curated_data: 25000    # 100 rows, 20 columns
+  source_data: 85000     # 700 rows, 15 columns
+  minimal_prompt: 500    # Basic instructions
+  enhanced_prompt: 2000  # Business context + schema
+  expected_response: 1500
+  
+# Success Metrics
+evaluation_criteria:
+  accuracy:
+    description: "Correctly identifies high-priority locations"
+    weight: 0.3
+    
+  actionability:
+    description: "Provides specific, implementable recommendations"
+    weight: 0.3
+    
+  completeness:
+    description: "Addresses all critical locations and issues"
+    weight: 0.2
+    
+  efficiency:
+    description: "Response time and token usage optimization"
+    weight: 0.2
+
+# Output Structure Requirements
+expected_output_structure:
+  urgent_locations:
+    type: "array"
+    required_fields: ["location_name", "priority_reason", "specific_actions"]
+    
+  summary:
+    type: "string"
+    description: "Executive summary of findings"
+    
+  total_locations_analyzed:
+    type: "integer"
+    description: "Count of locations processed"
+    
+  confidence_scores:
+    type: "object"
+    optional: true
+    description: "Confidence in recommendations"
+
+# Phase Implementation
+phases:
+  phase_1:
+    conditions: ["condition_3"]
+    objective: "Establish baseline with curated data"
+    success_criteria: "Reliable, consistent responses"
+    
+  phase_2:
+    conditions: ["condition_1"]
+    objective: "Test analytical capabilities with source data"
+    success_criteria: "Effective pattern recognition and aggregation"
+    
+  phase_3:
+    conditions: ["condition_2", "condition_4"]
+    objective: "Measure guidance impact"
+    success_criteria: "Improved business relevance and accuracy"
+
+# Environment Settings
+environment:
+  python_version: "3.8+"
+  required_packages: ["anthropic", "pyyaml", "pandas", "json"]
+  api_key_env_var: "ANTHROPIC_API_KEY"
+  
+# File Paths
+paths:
+  data_dir: "data/"
+  results_dir: "results/"
+  config_dir: "config/"
+  scripts_dir: "scripts/"

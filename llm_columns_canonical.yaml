@@ -1,0 +1,823 @@
+# Canonical YAML Configuration for Location Insights Schema Discovery
+# Last updated: 2025-07-17
+#
+# IMPORTANT: This config is an ENRICHMENT LAYER for data-driven schema discovery.
+# The schema manager MUST first extract fields, types, and sample values directly from data.
+# This config provides business context that cannot be inferred from data alone.
+#
+# Primary uses of this config:
+# 1. Provide business purpose, importance ratings, and semantic tags for fields
+# 2. Define question types and field relationships
+# 3. Specify which columns to exclude (narrative fields, IDs, labels)
+# 4. Set truncation tolerance parameters
+#
+# Sample values in this config are FALLBACKS ONLY - actual data samples must be preferred.
+
+# Step prompts for LLM pipeline - providing guidance for each step
+step_prompts:
+  # Schema discovery (Step 0) - runs at startup to profile data assets
+  schema_discovery:
+    system: |
+      You are an expert data profiler for retail analytics. Create a comprehensive schema intelligence report
+      from the provided data columns. Focus on identifying question types that can be answered with this data.
+      Assign business purpose and importance ratings to fields based on their analytical value.
+    output_format: |
+      {
+        "schema_version": "2.0",
+        "data_source": "location_data.csv",
+        "fields_detected": <count>,
+        "sample_fields": [ { "name": "...", "type": "...", "sample": "..." } ],
+        "field_importance": { "high": <count>, "medium": <count>, "low": <count> },
+        "business_purposes": { "performance": <count>, "health": <count>, "recommendations": <count>, "customers": <count>, "other": <count> },
+        "question_types_supported": [ "sales_performance", "location_health", ... ]
+      }
+    context_guidance: |
+      - Assign importance ratings (high/medium/low) based on business relevance
+      - Categorize fields by business purpose (performance, health, recommendations, etc.)
+      - Identify question types the schema can support based on available fields
+      - Exclude narrative and JSON fields from analysis
+      - Extract sample values that represent typical data distributions
+      - Surface metrics and continuous fields for sorting and filtering operations
+
+  # Classification (Step 1) - classifies user question into known types
+  classification:
+    system: |
+      You are a retail analytics assistant for location data. Classify the user's question into a known type
+      if possible (see 'question_types'). If the question doesn't match a known type, output the most relevant
+      filtering parameters (column names and values) that could be used to select appropriate location data.
+      Always use the available schema and field descriptions for reference. Data is reported weekly.
+    user: |
+      Question: {question}
+      Available schema columns: {schema_columns}
+      Field descriptions: {field_descriptions}
+    output_format: |
+      {
+        "question_type": "<type or 'custom'>",
+        "filter_column": "<column or null>",
+        "filter_value": "<value or null>",
+        "sort_column": "<column or null>",
+        "sort_order": "<asc/desc or null>"
+      }
+    context_guidance: |
+      - Only use columns present in the provided schema
+      - If no known type, propose the most relevant filter(s) and sort(s) based on the question and schema
+      - Data is weekly, so time context is important (see REPORT_WEEK)
+      - Output must be machine-readable JSON
+
+  # Context selection (Step 2) - selects relevant data based on classification
+  context_selection:
+    system: |
+      Given the classification result and filtering parameters, select the most relevant data rows and columns
+      for the question. Confirm or refine the filtering parameters. If no known type, use the custom filter parameters
+      from the previous step. Always reference the schema and field descriptions. Data is reported weekly.
+    user: |
+      Question type: {question_type}
+      Filter column: {filter_column}
+      Filter value: {filter_value}
+      Schema: {schema_columns}
+      Data sample: {data_sample}
+      Field descriptions: {field_descriptions}
+    output_format: |
+      {
+        "selected_locations": [ ... ],
+        "context_columns": [ ... ],
+        "applied_filters": {
+          "filter_column": "<column>",
+          "filter_value": "<value>"
+        }
+      }
+    context_guidance: |
+      - Use only columns and values present in the schema and data sample
+      - Output must include the actual filter(s) used for row selection
+      - Data is at weekly granularity (REPORT_WEEK)
+      - Output must be machine-readable JSON
+
+  # Answer generation (Step 3) - generates final answer based on context
+  answer_generation:
+    system: |
+      Generate a concise, actionable business answer using ONLY the provided context, schema, and question.
+      Reference the schema for column meanings. Do not invent data. Data is reported weekly.
+      
+      Focus on highlighting the most important insights, trends, and recommendations based on the data.
+      If the context includes multiple locations, prioritize those with the highest LLM_PRIORITY_SCORE
+      or those that match the specified filter conditions most closely.
+      
+      Include specific metrics, percentages, or values to support your answer, but keep the overall
+      response concise and business-focused.
+    user: |
+      Question: {question}
+      Schema columns: {schema_columns}
+      Field descriptions: {field_descriptions}
+      Context data: {context_data}
+    output_format: |
+      {
+        "answer": "Concise, actionable business answer with specific metrics and recommendations",
+        "key_metrics": ["CURRENT_WEEK_SALES", "LOCATION_HEALTH_STATUS", ...],
+        "suggested_followup_questions": ["How do these locations compare to last month?", ...]
+      }
+    context_guidance: |
+      - Use only the provided context and schema
+      - Reference field descriptions for all columns
+      - Data is weekly; clarify time context in the answer if relevant
+      - Output must be a string answer, with supporting previews as needed
+
+# Core identifier columns - fundamental location identifiers (excluding coordinates)
+core_identifier_columns:
+  - LOCATION_NAME
+  - ORG_NAME
+  - CITY
+  - STATE
+  - REPORT_WEEK
+  - LOCATION_ID
+  - ORG_ID
+
+# Sales performance metrics - key business indicators
+performance_metrics:
+  primary_metrics:
+    - CURRENT_WEEK_SALES
+    - CURRENT_DAILY_SALES
+    - CURRENT_WEEK_TRANSACTIONS
+    - CURRENT_OPERATION_DAYS
+  trend_metrics:
+    - LOCATION_SALES_WOW_PCT
+    - LOCATION_SALES_ST_PCT
+    - LOCATION_SALES_LT_PCT
+    - AVG_SHORT_TERM_SALES_PER_DAY
+    - AVG_LONG_TERM_SALES_PER_DAY
+
+# Classification and health indicators - status and action recommendations
+classification_columns:
+  status_indicators:
+    - LOCATION_HEALTH_STATUS
+    - ROBUST_ACTION_TYPE
+    - CLASSIFICATION_CONFIDENCE
+    - TREND_DIRECTION
+    - TREND_DURATION
+  trend_indicators:
+    - WEEKS_GROWING_RECENT
+    - WEEKS_DECLINING_RECENT
+    - WOW_SALES_TREND_VS_GLOBAL
+    - WOW_SALES_TREND_VS_ORG
+    - DAYS_SINCE_REPORT
+  priority_flags:
+    - LLM_PRIORITY_SCORE
+    - IS_URGENT_LOCATION
+    - IS_GROWING_LOCATION
+    - IS_DECLINING_LOCATION
+    - LOCATION_TREND_CATEGORY
+    - LOCATION_TREND_SCORE
+    - OPERATION_STATUS
+    - IS_EDGE_CASE_LOCATION
+    - HAS_CURRENT_WEEK_DATA
+    - HAS_RETENTION_DATA
+    - HAS_SUFFICIENT_PRIOR_DATA
+
+# Category performance - product category analysis
+category_columns:
+  top_categories:
+    - TOP1_CATEGORY
+    - TOP2_CATEGORY
+    - TOP3_CATEGORY
+    - TOP4_CATEGORY
+    - TOP5_CATEGORY
+  category_sales:
+    - TOP1_PCT_OF_SALES
+    - TOP2_PCT_OF_SALES
+    - TOP3_PCT_OF_SALES
+    - TOP4_PCT_OF_SALES
+    - TOP5_PCT_OF_SALES
+  category_trends:
+    - TOP1_WOW_TREND
+    - TOP1_ST_TREND
+    - TOP1_LT_TREND
+  category_metrics:
+    - TOTAL_ACTIVE_CATEGORIES
+    - TOP5_CATEGORIES_PCT
+
+# Product recommendations - what to add or remove
+recommendation_columns:
+  seed_products:
+    - SEED1_NAME
+    - SEED1_RANK
+    - SEED1_ID
+    - SEED2_NAME
+    - SEED2_RANK
+    - SEED2_ID
+    - SEED3_NAME
+    - SEED3_RANK
+    - SEED3_ID
+  add_recommendations:
+    - REC1_NAME
+    - REC1_SCORE
+    - REC1_ID
+    - REC2_NAME
+    - REC2_SCORE
+    - REC2_ID
+    - REC3_NAME
+    - REC3_SCORE
+    - REC3_ID
+  drop_recommendations:
+    - DROP1_NAME
+    - DROP1_RANK
+    - DROP1_ID
+    - DROP2_NAME
+    - DROP2_RANK
+    - DROP2_ID
+    - DROP3_NAME
+    - DROP3_RANK
+    - DROP3_ID
+
+# Customer segment data - customer behavior analysis
+customer_segment_columns:
+  segment_sizes:
+    - NEW_ONETIME_CUSTOMER_COUNT
+    - LESS_THAN_WEEKLY_CUSTOMER_COUNT
+    - WEEKLY_OR_MORE_CUSTOMER_COUNT
+    - TOTAL_ACTIVE_CUSTOMERS
+    - TOTAL_KNOWN_CUSTOMERS
+  segment_spend:
+    - NEW_ONETIME_TOTAL_SPEND
+    - LESS_THAN_WEEKLY_TOTAL_SPEND
+    - WEEKLY_OR_MORE_TOTAL_SPEND
+    - TOTAL_LOCATION_SPEND
+  segment_behavior:
+    - NEW_ONETIME_AVG_SPEND
+    - LESS_THAN_WEEKLY_AVG_SPEND
+    - WEEKLY_OR_MORE_AVG_SPEND
+    - OVERALL_AVG_SPEND_PER_CUSTOMER
+    - NEW_ONETIME_AVG_TRANSACTIONS
+    - LESS_THAN_WEEKLY_AVG_TRANSACTIONS
+    - WEEKLY_OR_MORE_AVG_TRANSACTIONS
+  segment_engagement:
+    - NEW_ONETIME_PCT_APP_USERS
+    - LESS_THAN_WEEKLY_PCT_APP_USERS
+    - WEEKLY_OR_MORE_PCT_APP_USERS
+    - OVERALL_PCT_APP_USERS
+  segment_distribution:
+    - NEW_ONETIME_PCT
+    - LESS_THAN_WEEKLY_PCT
+    - WEEKLY_OR_MORE_PCT
+    - NEW_ONETIME_REVENUE_SHARE
+    - LESS_THAN_WEEKLY_REVENUE_SHARE
+    - WEEKLY_OR_MORE_REVENUE_SHARE
+    - DOMINANT_CUSTOMER_SEGMENT
+    - MAX_SEGMENT_CONCENTRATION
+  retention_metrics:
+    - PCT_CUSTOMERS_ACTIVE_THIS_WEEK
+    - LAG_WEEK_FOR_RETENTION
+    - NEW_ONETIME_RETENTION_12W_AGO_LAG_WEEK_FOR_RETENTION
+    - LESS_THAN_WEEKLY_RETENTION_12W_AGO_LAG_WEEK_FOR_RETENTION
+    - WEEKLY_OR_MORE_RETENTION_12W_AGO_LAG_WEEK_FOR_RETENTION
+    - NEW_ONETIME_COHORT_SIZE_12W
+    - LESS_THAN_WEEKLY_COHORT_SIZE_12W
+    - WEEKLY_OR_MORE_COHORT_SIZE_12W
+
+# Field descriptions - detailed explanation of each field for LLM context
+field_descriptions:
+  # Core identifier fields
+  LOCATION_NAME:
+    description: "The name or identifier of the retail location"
+    importance: "high"
+    business_purpose: "identification"
+    type: "string"
+    sample_values: ["Downtown Store", "Airport Kiosk", "Campus Center"]
+    range: null
+    semantic_tags: ["location", "identifier", "core"]
+  
+  ORG_NAME:
+    description: "The organization or company that owns the location"
+    importance: "high"
+    business_purpose: "identification"
+    type: "string"
+    sample_values: ["TrolleyHouse", "Retail Group", "Campus Foods"]
+    range: null
+    semantic_tags: ["organization", "identifier", "core", "filter"]
+  
+  LOCATION_ID:
+    description: "Unique numeric identifier for each retail location"
+    importance: "medium"
+    business_purpose: "identification"
+    type: "string"
+    sample_values: ["LOC12345", "LOC67890", "LOC54321"]
+    range: null
+    semantic_tags: ["id", "identifier", "key", "core"]
+  
+  ORG_ID:
+    description: "Unique numeric identifier for each organization or company"
+    importance: "medium"
+    business_purpose: "identification"
+    type: "string"
+    sample_values: ["ORG123", "ORG456", "ORG789"]
+    range: null
+    semantic_tags: ["id", "identifier", "key", "core"]
+  
+  CITY:
+    description: "City where the retail location is situated"
+    importance: "medium"
+    business_purpose: "geographic context"
+    type: "string"
+    sample_values: ["New York", "Chicago", "San Francisco"]
+    range: null
+    semantic_tags: ["location", "geography", "filter"]
+  
+  STATE:
+    description: "State where the retail location is situated"
+    importance: "medium"
+    business_purpose: "geographic context"
+    type: "string"
+    sample_values: ["NY", "IL", "CA"]
+    range: null
+    semantic_tags: ["location", "geography", "filter"]
+  
+  REPORT_WEEK:
+    description: "The week for which the data is reported (YYYY-MM-DD format, always a Monday)"
+    importance: "high"
+    business_purpose: "time reference"
+    type: "date"
+    sample_values: ["2025-07-01", "2025-06-24", "2025-06-17"]
+    range: null
+    semantic_tags: ["date", "time", "core", "filter"]
+  
+  # Performance metrics
+  CURRENT_WEEK_SALES:
+    description: "Total sales for the current reporting week in dollars"
+    importance: "high"
+    business_purpose: "performance"
+    type: "float"
+    sample_values: [12500.45, 8750.23, 15320.78]
+    range: {"min": 0, "max": 100000, "typical": 10000}
+    semantic_tags: ["sales", "revenue", "performance", "metric"]
+  
+  CURRENT_DAILY_SALES:
+    description: "Average daily sales for the current reporting week in dollars"
+    importance: "high"
+    business_purpose: "performance"
+    type: "float"
+    sample_values: [1785.78, 1250.03, 2188.68]
+    range: {"min": 0, "max": 15000, "typical": 1500}
+    semantic_tags: ["sales", "revenue", "daily", "performance", "metric"]
+  
+  CURRENT_WEEK_TRANSACTIONS:
+    description: "Total number of transactions for the current reporting week"
+    importance: "high"
+    business_purpose: "performance"
+    type: "integer"
+    sample_values: [450, 325, 520]
+    range: {"min": 0, "max": 5000, "typical": 400}
+    semantic_tags: ["transactions", "volume", "performance", "metric"]
+  
+  CURRENT_OPERATION_DAYS:
+    description: "Number of days the location was operational during the reporting week"
+    importance: "medium"
+    business_purpose: "operations"
+    type: "integer"
+    sample_values: [7, 6, 5]
+    range: {"min": 0, "max": 7, "typical": 7}
+    semantic_tags: ["operations", "days", "context"]
+  
+  LOCATION_SALES_WOW_PCT:
+    description: "Week-over-week percentage change in sales (current week vs previous week)"
+    importance: "high"
+    business_purpose: "trend"
+    type: "float"
+    sample_values: [5.2, -3.4, 12.7]
+    range: {"min": -100, "max": 100, "typical": 0}
+    semantic_tags: ["trend", "change", "wow", "performance", "metric"]
+  
+  LOCATION_SALES_ST_PCT:
+    description: "Short-term percentage change in sales (current week vs 4-week average)"
+    importance: "high"
+    business_purpose: "trend"
+    type: "float"
+    sample_values: [3.5, -2.1, 8.4]
+    range: {"min": -100, "max": 100, "typical": 0}
+    semantic_tags: ["trend", "change", "short-term", "performance", "metric"]
+  
+  LOCATION_SALES_LT_PCT:
+    description: "Long-term percentage change in sales (current week vs 12-week average)"
+    importance: "high"
+    business_purpose: "trend"
+    type: "float"
+    sample_values: [7.4, -4.6, 15.2]
+    range: {"min": -100, "max": 100, "typical": 0}
+    semantic_tags: ["trend", "change", "long-term", "performance", "metric"]
+  
+  AVG_SHORT_TERM_SALES_PER_DAY:
+    description: "Average daily sales over the short term (4 weeks) in dollars"
+    importance: "medium"
+    business_purpose: "trend"
+    type: "float"
+    sample_values: [1650.45, 1200.67, 1950.32]
+    range: {"min": 0, "max": 15000, "typical": 1500}
+    semantic_tags: ["sales", "average", "short-term", "performance", "metric"]
+  
+  AVG_LONG_TERM_SALES_PER_DAY:
+    description: "Average daily sales over the long term (12 weeks) in dollars"
+    importance: "medium"
+    business_purpose: "trend"
+    type: "float"
+    sample_values: [1580.25, 1175.45, 1900.78]
+    range: {"min": 0, "max": 15000, "typical": 1500}
+    semantic_tags: ["sales", "average", "long-term", "performance", "metric"]
+  
+  # Health indicators
+  LOCATION_HEALTH_STATUS:
+    description: "Overall health classification of the location based on performance metrics"
+    importance: "high"
+    business_purpose: "health"
+    type: "string"
+    sample_values: ["Healthy", "At Risk", "Critical", "Growing", "Stable"]
+    range: null
+    semantic_tags: ["health", "status", "classification", "performance"]
+  
+  ROBUST_ACTION_TYPE:
+    description: "Recommended action type based on location performance analysis"
+    importance: "high"
+    business_purpose: "recommendations"
+    type: "string"
+    sample_values: ["Product Mix", "Pricing", "Marketing", "Operations", "No Action"]
+    range: null
+    semantic_tags: ["action", "recommendation", "strategy"]
+  
+  LLM_PRIORITY_SCORE:
+    description: "Numerical score (0-100) indicating the urgency/priority of the location for business attention"
+    importance: "high"
+    business_purpose: "prioritization"
+    type: "integer"
+    sample_values: [95, 75, 42]
+    range: {"min": 0, "max": 100, "typical": 50}
+    semantic_tags: ["priority", "score", "ranking", "sort"]
+  
+  IS_URGENT_LOCATION:
+    description: "Boolean flag indicating if the location requires urgent business attention"
+    importance: "high"
+    business_purpose: "health"
+    type: "boolean"
+    sample_values: [true, false]
+    range: null
+    semantic_tags: ["urgent", "flag", "filter", "health"]
+  
+  IS_GROWING_LOCATION:
+    description: "Boolean flag indicating if the location shows consistent growth pattern"
+    importance: "high"
+    business_purpose: "trend"
+    type: "boolean"
+    sample_values: [true, false]
+    range: null
+    semantic_tags: ["growing", "flag", "filter", "trend"]
+  
+  IS_DECLINING_LOCATION:
+    description: "Boolean flag indicating if the location shows consistent decline pattern"
+    importance: "high"
+    business_purpose: "trend"
+    type: "boolean"
+    sample_values: [true, false]
+    range: null
+    semantic_tags: ["declining", "flag", "filter", "trend"]
+  
+  TREND_DIRECTION:
+    description: "Overall direction of sales trend (Up, Down, Flat)"
+    importance: "medium"
+    business_purpose: "trend"
+    type: "string"
+    sample_values: ["Up", "Down", "Flat"]
+    range: null
+    semantic_tags: ["trend", "direction", "classification"]
+  
+  TREND_DURATION:
+    description: "Duration of the current trend in weeks"
+    importance: "medium"
+    business_purpose: "trend"
+    type: "integer"
+    sample_values: [3, 6, 12]
+    range: {"min": 1, "max": 52, "typical": 4}
+    semantic_tags: ["trend", "duration", "context"]
+  
+  # Category performance
+  TOP1_CATEGORY:
+    description: "Name of the top-selling product category"
+    importance: "high"
+    business_purpose: "category performance"
+    type: "string"
+    sample_values: ["Beverages", "Snacks", "Fresh Food"]
+    range: null
+    semantic_tags: ["category", "top", "product"]
+  
+  TOP1_PCT_OF_SALES:
+    description: "Percentage of total sales from the top-selling category"
+    importance: "high"
+    business_purpose: "category performance"
+    type: "float"
+    sample_values: [35.2, 28.7, 42.5]
+    range: {"min": 0, "max": 100, "typical": 30}
+    semantic_tags: ["category", "percentage", "sales", "distribution"]
+  
+  TOP1_WOW_TREND:
+    description: "Week-over-week percentage change for the top category"
+    importance: "medium"
+    business_purpose: "category trend"
+    type: "float"
+    sample_values: [3.2, -1.5, 6.7]
+    range: {"min": -100, "max": 100, "typical": 0}
+    semantic_tags: ["category", "trend", "wow", "change"]
+  
+  # Recommendations
+  REC1_NAME:
+    description: "Name of the top product recommended to add to inventory"
+    importance: "high"
+    business_purpose: "recommendations"
+    type: "string"
+    sample_values: ["Protein Bar", "Energy Drink", "Fresh Salad"]
+    range: null
+    semantic_tags: ["recommendation", "product", "action"]
+  
+  REC1_SCORE:
+    description: "Confidence score for the top product recommendation (0-100)"
+    importance: "medium"
+    business_purpose: "recommendations"
+    type: "integer"
+    sample_values: [95, 87, 72]
+    range: {"min": 0, "max": 100, "typical": 80}
+    semantic_tags: ["recommendation", "score", "confidence"]
+  
+  DROP1_NAME:
+    description: "Name of the top product recommended to remove from inventory"
+    importance: "high"
+    business_purpose: "recommendations"
+    type: "string"
+    sample_values: ["Coconut Water", "Specialty Chips", "Probiotic Drink"]
+    range: null
+    semantic_tags: ["recommendation", "product", "action", "remove"]
+  
+  # Customer segments
+  NEW_ONETIME_CUSTOMER_COUNT:
+    description: "Count of new or one-time customers in the current week"
+    importance: "high"
+    business_purpose: "customers"
+    type: "integer"
+    sample_values: [45, 32, 58]
+    range: {"min": 0, "max": 1000, "typical": 40}
+    semantic_tags: ["customers", "segment", "new", "count"]
+  
+  LESS_THAN_WEEKLY_CUSTOMER_COUNT:
+    description: "Count of occasional customers (less than weekly visits)"
+    importance: "high"
+    business_purpose: "customers"
+    type: "integer"
+    sample_values: [120, 95, 145]
+    range: {"min": 0, "max": 2000, "typical": 100}
+    semantic_tags: ["customers", "segment", "occasional", "count"]
+  
+  WEEKLY_OR_MORE_CUSTOMER_COUNT:
+    description: "Count of regular customers (weekly or more frequent visits)"
+    importance: "high"
+    business_purpose: "customers"
+    type: "integer"
+    sample_values: [85, 65, 105]
+    range: {"min": 0, "max": 1500, "typical": 80}
+    semantic_tags: ["customers", "segment", "regular", "count"]
+  
+  TOTAL_ACTIVE_CUSTOMERS:
+    description: "Total count of all active customers in the current week"
+    importance: "high"
+    business_purpose: "customers"
+    type: "integer"
+    sample_values: [250, 192, 308]
+    range: {"min": 0, "max": 5000, "typical": 250}
+    semantic_tags: ["customers", "total", "active", "count"]
+
+# Question types - categories of questions the LLM can answer
+question_types:
+  sales_performance:
+    description: "Questions about sales performance, trends, and comparisons"
+    example_questions:
+      - "How are sales performing this week?"
+      - "Which locations have the highest sales?"
+      - "How do sales compare to last week?"
+      - "What's the sales trend over the last month?"
+    required_fields: ["CURRENT_WEEK_SALES", "LOCATION_SALES_WOW_PCT"]
+    fallback_fields: ["CURRENT_DAILY_SALES", "LOCATION_SALES_ST_PCT"]
+    business_focus: "performance"
+  
+  location_health:
+    description: "Questions about location health status and areas needing attention"
+    example_questions:
+      - "Which locations need immediate attention?"
+      - "What locations are at risk?"
+      - "Show me the locations with critical health status"
+      - "Which stores are healthy vs. at-risk?"
+    required_fields: ["LOCATION_HEALTH_STATUS", "IS_URGENT_LOCATION"]
+    fallback_fields: ["LLM_PRIORITY_SCORE", "ROBUST_ACTION_TYPE"]
+    business_focus: "health"
+  
+  growth_analysis:
+    description: "Questions about growth patterns, growing locations, and growth drivers"
+    example_questions:
+      - "Which locations are growing?"
+      - "What's driving growth at our top locations?"
+      - "Show me the fastest growing stores"
+      - "Which locations have consistent growth patterns?"
+    required_fields: ["IS_GROWING_LOCATION", "LOCATION_SALES_LT_PCT"]
+    fallback_fields: ["LOCATION_SALES_WOW_PCT", "TREND_DIRECTION"]
+    business_focus: "trend"
+  
+  decline_analysis:
+    description: "Questions about declining locations and factors driving decline"
+    example_questions:
+      - "Which locations are declining?"
+      - "What's causing the decline at these locations?"
+      - "Show me stores with consistent sales drops"
+      - "Which locations have been declining for multiple weeks?"
+    required_fields: ["IS_DECLINING_LOCATION", "LOCATION_SALES_LT_PCT"]
+    fallback_fields: ["LOCATION_SALES_WOW_PCT", "TREND_DIRECTION"]
+    business_focus: "trend"
+  
+  product_recommendations:
+    description: "Questions about product recommendations to add or remove"
+    example_questions:
+      - "What products should I add to my stores?"
+      - "Which products should I remove from inventory?"
+      - "What are the top product recommendations?"
+      - "Which products would improve sales at this location?"
+    required_fields: ["REC1_NAME", "DROP1_NAME"]
+    fallback_fields: ["REC1_SCORE", "REC2_NAME", "REC3_NAME"]
+    business_focus: "recommendations"
+  
+  category_analysis:
+    description: "Questions about category performance and category mix"
+    example_questions:
+      - "What are the top-selling categories?"
+      - "How are my beverage categories performing?"
+      - "Which categories are growing or declining?"
+      - "What's the sales mix by category?"
+    required_fields: ["TOP1_CATEGORY", "TOP1_PCT_OF_SALES"]
+    fallback_fields: ["TOP2_CATEGORY", "TOP3_CATEGORY", "TOP1_WOW_TREND"]
+    business_focus: "category performance"
+  
+  customer_segments:
+    description: "Questions about customer segments and behavior"
+    example_questions:
+      - "How many customers do we have by segment?"
+      - "What's the spending pattern for regular customers?"
+      - "How is retention for new customers?"
+      - "Which customer segment drives most revenue?"
+    required_fields: ["TOTAL_ACTIVE_CUSTOMERS", "WEEKLY_OR_MORE_CUSTOMER_COUNT"]
+    fallback_fields: ["LESS_THAN_WEEKLY_CUSTOMER_COUNT", "NEW_ONETIME_CUSTOMER_COUNT"]
+    business_focus: "customers"
+  
+  urgent_locations:
+    description: "Questions specifically about locations needing urgent attention"
+    example_questions:
+      - "Which locations need urgent attention?"
+      - "Show me the most critical stores"
+      - "What are my highest priority locations?"
+      - "Which locations should I focus on first?"
+    required_fields: ["IS_URGENT_LOCATION", "LLM_PRIORITY_SCORE"]
+    fallback_fields: ["LOCATION_HEALTH_STATUS", "ROBUST_ACTION_TYPE"]
+    business_focus: "health"
+  
+  operational_insights:
+    description: "Questions about operational factors affecting performance"
+    example_questions:
+      - "Are any locations not operating all days?"
+      - "How do operational days impact sales?"
+      - "Which locations have operational issues?"
+      - "What operational changes would improve performance?"
+    required_fields: ["CURRENT_OPERATION_DAYS", "ROBUST_ACTION_TYPE"]
+    fallback_fields: ["OPERATION_STATUS", "LLM_PRIORITY_SCORE"]
+    business_focus: "operations"
+  
+  geographic_comparisons:
+    description: "Questions comparing locations by geographic area"
+    example_questions:
+      - "How are my New York locations performing?"
+      - "Compare performance by state"
+      - "Which cities have the best performing locations?"
+      - "Are there regional performance differences?"
+    required_fields: ["CITY", "STATE"]
+    fallback_fields: ["CURRENT_WEEK_SALES", "LOCATION_HEALTH_STATUS"]
+    business_focus: "geographic context"
+
+# Truncation tolerance settings - for context slimming and priority sorting
+truncation_tolerance:
+  enabled: true
+  sort_strategies:
+    urgent_locations:
+      primary_sort: ["LLM_PRIORITY_SCORE", "IS_URGENT_LOCATION"]
+      sort_order: "descending"
+      required_columns: ["LOCATION_NAME", "LOCATION_HEALTH_STATUS"]
+    growing_locations:
+      primary_sort: ["IS_GROWING_LOCATION", "LOCATION_SALES_WOW_PCT"]
+      sort_order: "descending"
+      required_columns: ["LOCATION_NAME", "CURRENT_WEEK_SALES"]
+    declining_locations:
+      primary_sort: ["IS_DECLINING_LOCATION", "LOCATION_SALES_WOW_PCT"]
+      sort_order: "ascending"
+      required_columns: ["LOCATION_NAME", "CURRENT_WEEK_SALES"]
+  context_scaling:
+    location_limits:
+      4096: 7      # Small context
+      6500: 15     # Standard context
+      32000: 80    # Large context
+      128000: 300  # Extended context
+
+# Token model limits and context modes
+context_modes:
+  small:  # Local 7B models
+    step_0: 4096
+    step_1: 4096
+    step_2: 4096
+    step_3: 4096
+    max_locations: 7
+    description: "Local development and testing"
+    
+  standard:  # Standard context
+    step_0: 6500
+    step_1: 6500
+    step_2: 6500
+    step_3: 6500
+    max_locations: 15
+    description: "Production with standard models"
+    
+  large:  # Cloud models (GPT-3.5 class)
+    step_0: 16000
+    step_1: 16000
+    step_2: 32000
+    step_3: 16000
+    max_locations: 80
+    description: "Detailed analysis with advanced models"
+    
+  extended:  # Cloud models (GPT-4, Claude-3)
+    step_0: 32000
+    step_1: 32000
+    step_2: 128000
+    step_3: 32000
+    max_locations: 300
+    description: "Comprehensive analysis for executive reports"
+
+# Exclude columns - narrative, labels, IDs, and fields not useful for LLM analysis
+# Using exclude approach for schema evolution (new columns automatically included)
+# Focus on continuous metrics rather than derived labels or IDs
+exclude_columns:
+  # System and internal columns
+  - RAW_JSON_DATA
+  - LAST_UPDATED_TIMESTAMP
+  - DATA_QUALITY_FLAGS
+  - DATA_QUALITY_NOTES
+  - DATA_SOURCE_SYSTEM
+  - PROCESSING_VERSION
+  - IMPUTED_COORDS
+  
+  # IDs (used by dashboard API but not useful for LLM)
+  - LOCATION_ID
+  - ORG_ID
+  - SEED1_ID
+  - SEED2_ID
+  - SEED3_ID
+  - REC1_ID
+  - REC2_ID
+  - REC3_ID
+  - DROP1_ID
+  - DROP2_ID
+  - DROP3_ID
+  
+  # Status labels (prefer continuous variables instead)
+  - LOCATION_HEALTH_STATUS
+  - ROBUST_ACTION_TYPE
+  - CLASSIFICATION_CONFIDENCE
+  - TREND_DIRECTION
+  - TREND_DURATION
+  - IS_URGENT_LOCATION
+  - IS_GROWING_LOCATION
+  - IS_DECLINING_LOCATION
+  - LOCATION_TREND_CATEGORY
+  - LOCATION_TREND_SCORE
+  - OPERATION_STATUS
+  - DAYS_SINCE_REPORT
+  - DOMINANT_CUSTOMER_SEGMENT
+  
+  # Verbose narrative fields
+  - LOCATION_NARRATIVE
+  - HEALTH_STATUS_NARRATIVE
+  - RECOMMENDATION_NARRATIVE
+  - CUSTOMER_SEGMENT_NARRATIVE
+  - CATEGORY_PERFORMANCE_NARRATIVE
+  - PRODUCT_RECOMMENDATION_NARRATIVE
+  - ACTION_STEPS_DETAILED
+  - LOCATION_HISTORY_NOTES
+  
+  # JSON and composite fields
+  - FULL_ADDRESS
+  - ORG_AND_LOCATION
+  - COMBINED_HEALTH_INDEX
+  - LOCATION_CONTEXT_JSON
+  - PRODUCT_RECOMMENDATIONS_JSON
+  - PRODUCT_RECOMMENDATIONS_ADD_DROP
+  
+  # Technical IDs and debug fields
+  - DATABASE_ROW_ID
+  - INTERNAL_LOCATION_KEY
+  - INTERNAL_ORG_KEY
+  - TEST_FLAG
+  - DEBUG_NOTES
+  - IS_TEST_LOCATION
