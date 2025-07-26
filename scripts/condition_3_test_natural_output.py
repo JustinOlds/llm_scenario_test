@@ -2,6 +2,7 @@
 """
 Condition 3 Test: Curated Data + Minimal Guidance
 Tests Claude API with processed weekly location summaries and basic prompting.
+Now handles natural language responses instead of JSON.
 """
 
 from dotenv import load_dotenv
@@ -19,6 +20,11 @@ class Condition3Tester:
         """Initialize the tester with Claude API client."""
         self.client = anthropic.Anthropic(api_key=api_key)
         self.results = []
+        self.test_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # Create results directory
+        self.results_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "results", "condition_3")
+        os.makedirs(self.results_dir, exist_ok=True)
         
     def discover_curated_files(self, data_dir: str) -> List[str]:
         """Discover all CSV files in the curated data directory."""
@@ -64,31 +70,44 @@ Location Data:
 
 Instructions:
 - Analyze the data to answer the question
-- Focus on actionable insights for the operator  
-- Provide specific recommendations with supporting data
-- Format your response as structured JSON
+- Focus on high priority locations for the operator  
+- Provide specific recommendations with supporting data (e.g., product recommendations to add or drop, category trends, etc.)
+"""
 
-Response Format:
-{{
-  "urgent_locations": [
-    {{
-      "location_name": "...",
-      "priority_reason": "...", 
-      "specific_actions": ["...", "..."]
-    }}
-  ],
-  "summary": "...",
-  "total_locations_analyzed": 0
-}}"""
-
-    def call_claude_api(self, prompt: str) -> Dict[str, Any]:
+    def call_claude_api(self, prompt: str, user_question: str = None) -> Dict[str, Any]:
         """Make API call to Claude and return structured response."""
         start_time = time.time()
         
         try:
+            # Estimate tokens in prompt (rough approximation)
+            est_input_tokens = len(prompt) // 3  # Rough estimate: ~3 chars per token on average
+            
+            # Log token estimation
+            print(f"Estimated input tokens: {est_input_tokens} (Claude limit: 200,000)")
+            
+            if est_input_tokens > 190000:  # Buffer for safety
+                raise ValueError(f"Estimated input tokens ({est_input_tokens}) likely exceeds Claude's limit")
+            
+            # Save final prompt for transparency (same as Condition 4)
+            final_prompt_file = os.path.join(self.results_dir, f"final_prompt_{self.test_timestamp}.txt")
+            with open(final_prompt_file, 'w', encoding='utf-8') as f:
+                f.write("FINAL PROMPT SENT TO LLM (CONDITION 3 - NATURAL OUTPUT)\n")
+                f.write("=" * 60 + "\n\n")
+                f.write(f"Timestamp: {datetime.now().isoformat()}\n")
+                f.write(f"Model: claude-3-5-sonnet-20241022\n")
+                f.write(f"Max Tokens: 8192\n")
+                f.write(f"Temperature: 0.1\n")
+                f.write(f"Estimated Tokens: {est_input_tokens}\n")
+                f.write(f"Prompt Length: {len(prompt)} characters\n")
+                f.write("\n" + "=" * 60 + "\n\n")
+                f.write(prompt)
+            
+            print(f"Final prompt saved to {final_prompt_file}")
+            print(f"Prompt length: {len(prompt)} characters, estimated tokens: {est_input_tokens}")
+                
             message = self.client.messages.create(
                 model="claude-3-5-sonnet-20241022",
-                max_tokens=4000,
+                max_tokens=8192,  # Increased from 4000 to allow more detailed responses
                 temperature=0.1,
                 messages=[
                     {"role": "user", "content": prompt}
@@ -97,41 +116,43 @@ Response Format:
             
             response_time = time.time() - start_time
             
-            # Extract response content
+            # Extract response content as natural language
             response_text = message.content[0].text
             
-            # Try to parse JSON from response
-            try:
-                # Look for JSON block in response
-                if "```json" in response_text:
-                    json_start = response_text.find("```json") + 7
-                    json_end = response_text.find("```", json_start)
-                    json_text = response_text[json_start:json_end].strip()
-                elif "{" in response_text and "}" in response_text:
-                    json_start = response_text.find("{")
-                    json_end = response_text.rfind("}") + 1
-                    json_text = response_text[json_start:json_end]
-                else:
-                    json_text = response_text
-                    
-                parsed_response = json.loads(json_text)
-            except json.JSONDecodeError:
-                # If JSON parsing fails, create structured response
-                parsed_response = {
-                    "raw_response": response_text,
-                    "parsing_error": "Could not parse JSON response"
-                }
-            
-            return {
-                "response": parsed_response,
+            # Save structured response (comparable to Condition 4)
+            result = {
+                "timestamp": datetime.now().isoformat(),
+                "condition": "3_natural_output",
+                "question": user_question,
+                "response": response_text,
                 "response_time": response_time,
                 "token_usage": {
                     "input_tokens": message.usage.input_tokens,
                     "output_tokens": message.usage.output_tokens,
                     "total_tokens": message.usage.input_tokens + message.usage.output_tokens
                 },
-                "raw_text": response_text
+                "prompt_length": len(prompt),
+                "estimated_input_tokens": est_input_tokens,
+                "guidance_type": "minimal"
             }
+            
+            # Save results in comparable format to Condition 4
+            results_file = os.path.join(self.results_dir, f"condition_3_result_{self.test_timestamp}.json")
+            with open(results_file, 'w') as f:
+                json.dump(result, f, indent=2, default=str)
+            
+            # Save human-readable response
+            response_file = os.path.join(self.results_dir, f"condition_3_response_{self.test_timestamp}.txt")
+            with open(response_file, 'w') as f:
+                f.write(f"Question: {user_question}\n")
+                f.write(f"Timestamp: {result['timestamp']}\n")
+                f.write(f"Condition: 3 - Natural Output (Minimal Guidance)\n")
+                f.write("=" * 80 + "\n\n")
+                f.write(response_text)
+            
+            print(f"Results saved to {results_file}")
+            
+            return result
             
         except Exception as e:
             return {
@@ -139,7 +160,7 @@ Response Format:
                 "response_time": time.time() - start_time
             }
     
-    def run_test(self, data_dir: str, user_question: str, output_dir: str) -> Dict[str, Any]:
+    def run_test(self, data_dir: str, user_question: str, output_dir: str = None) -> Dict[str, Any]:
         """Run the complete Condition 3 test."""
         print(f"Starting Condition 3 Test: Curated Data + Minimal Guidance")
         print(f"Question: {user_question}")
@@ -178,31 +199,47 @@ Response Format:
         
         # Call Claude API
         print("Calling Claude API...")
-        result = self.call_claude_api(prompt)
+        result = self.call_claude_api(prompt, user_question)
         
         if "error" in result:
             print(f"API call failed: {result['error']}")
             return result
-            
-        # Add metadata
-        result["test_metadata"] = {
-            "condition": "3_curated_minimal",
-            "timestamp": datetime.now().isoformat(),
-            "question": user_question,
-            "data_files": [os.path.basename(f) for f in csv_files],
-            "data_directory": data_dir,
-            "prompt_length": len(prompt)
-        }
         
-        # Save results
+        print("Condition 3 test complete!")
+        
+        # Print comparable summary to Condition 4
+        print("\n" + "=" * 80)
+        print("CONDITION 3: NATURAL OUTPUT TEST RESULTS")
+        print("=" * 80)
+        print(f"Guidance Type: Minimal")
+        print(f"Data Files: {len(csv_files)}")
+        print(f"Token Usage: {result.get('token_usage', {}).get('total_tokens', 'Unknown')}")
+        print(f"Prompt Length: {len(prompt)} characters")
+        print(f"Response Time: {result.get('response_time', 0):.2f} seconds")
+        print("")
+        print(f"Results saved to: {os.path.join(self.results_dir, f'condition_3_result_{self.test_timestamp}.json')}")
+        
+        return result
+        
+        # Save results as JSON (but containing natural language response)
         os.makedirs(output_dir, exist_ok=True)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_file = os.path.join(output_dir, f"condition_3_result_{timestamp}.json")
         
         with open(output_file, 'w') as f:
-            json.dump(result, f, indent=2)
+            json.dump(result, f, indent=2, ensure_ascii=False)
+            
+        # Also save just the response text as a separate readable file
+        text_output_file = os.path.join(output_dir, f"condition_3_response_{timestamp}.txt")
+        with open(text_output_file, 'w', encoding='utf-8') as f:
+            f.write(f"Question: {user_question}\n")
+            f.write(f"Timestamp: {result['test_metadata']['timestamp']}\n")
+            f.write(f"Data files: {', '.join(result['test_metadata']['data_files'])}\n")
+            f.write("=" * 50 + "\n\n")
+            f.write(result["response_text"])
             
         print(f"Results saved to: {output_file}")
+        print(f"Response text saved to: {text_output_file}")
         print(f"Response time: {result['response_time']:.2f}s")
         print(f"Token usage: {result['token_usage']['total_tokens']}")
         
@@ -228,13 +265,17 @@ def main():
     # Print summary
     if "error" not in result:
         print("\n=== Test Summary ===")
-        if "urgent_locations" in result["response"]:
-            urgent_count = len(result["response"]["urgent_locations"])
-            print(f"Urgent locations identified: {urgent_count}")
-            for loc in result["response"]["urgent_locations"][:3]:  # Show first 3
-                print(f"  - {loc.get('location_name', 'Unknown')}: {loc.get('priority_reason', 'No reason')}")
+        print(f"Response length: {len(result['response'])} characters")
         print(f"Total tokens used: {result['token_usage']['total_tokens']}")
         print(f"Cost estimate: ${result['token_usage']['total_tokens'] * 0.000015:.4f}")  # Rough estimate
+        
+        # Show first few lines of response
+        print("\n=== Response Preview ===")
+        response_lines = result['response_text'].split('\n')
+        for i, line in enumerate(response_lines[:5]):
+            print(line)
+        if len(response_lines) > 5:
+            print("...")
     else:
         print(f"Test failed: {result['error']}")
 

@@ -1,0 +1,1966 @@
+{
+  "condition": "4_enhanced_guidance",
+  "timestamp": "20250726_122911",
+  "description": "Enhanced guidance test using schema discovery and config enrichment on 49 curated locations",
+  "schema_discovery": {
+    "timestamp": "2025-07-26T12:29:11.388105",
+    "data_sources": [
+      "C:\\Users\\justin.olds\\OneDrive - 365 Retail Markets\\Documents\\llm_scenario_test\\data\\curated\\mart_llm_curated_location_compact_min.csv"
+    ],
+    "total_fields": 113,
+    "field_metadata": {
+      "LOCATION_NAME": {
+        "name": "LOCATION_NAME",
+        "data_type": "text",
+        "business_purpose": "Location identification and geographic analysis",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "Polydeck Building 2",
+          "Milliken Redwood DC",
+          "Toray Admin",
+          "ADUSA",
+          "CF Sauer warehouse 4"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "CITY": {
+        "name": "CITY",
+        "data_type": "categorical",
+        "business_purpose": "Geographic market analysis",
+        "importance_tier": 2,
+        "completeness": 0.8979591836734694,
+        "unique_values": 10,
+        "sample_values": [
+          "Spartanburg",
+          "Duncan",
+          "Moore",
+          "Duncan",
+          "Greenville"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "STATE": {
+        "name": "STATE",
+        "data_type": "categorical",
+        "business_purpose": "Regional market analysis",
+        "importance_tier": 2,
+        "completeness": 0.9387755102040817,
+        "unique_values": 1,
+        "sample_values": [
+          "SC",
+          "SC",
+          "SC",
+          "SC",
+          "SC"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "ORG_NAME": {
+        "name": "ORG_NAME",
+        "data_type": "categorical",
+        "business_purpose": "Organizational segmentation",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 1,
+        "sample_values": [
+          "CanteenGreenville",
+          "CanteenGreenville",
+          "CanteenGreenville",
+          "CanteenGreenville",
+          "CanteenGreenville"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "REPORT_WEEK": {
+        "name": "REPORT_WEEK",
+        "data_type": "categorical",
+        "business_purpose": "Temporal reference point",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 1,
+        "sample_values": [
+          "7/13/2025",
+          "7/13/2025",
+          "7/13/2025",
+          "7/13/2025",
+          "7/13/2025"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "CURRENT_WEEK__SALES": {
+        "name": "CURRENT_WEEK__SALES",
+        "data_type": "numeric",
+        "business_purpose": "Current week total sales",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 48,
+        "sample_values": [
+          "71",
+          "114",
+          "257",
+          "43",
+          "88"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "CURRENT_WEEK__AVG_DAILY_SALES": {
+        "name": "CURRENT_WEEK__AVG_DAILY_SALES",
+        "data_type": "numeric",
+        "business_purpose": "Current period daily sales rate",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 42,
+        "sample_values": [
+          "11",
+          "25",
+          "47",
+          "9",
+          "19"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "CURRENT_WEEK__TRANSACTIONS": {
+        "name": "CURRENT_WEEK__TRANSACTIONS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 46,
+        "sample_values": [
+          "31",
+          "44",
+          "71",
+          "12",
+          "42"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "CURRENT_WEEK__OPERATION_DAYS": {
+        "name": "CURRENT_WEEK__OPERATION_DAYS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 5,
+        "sample_values": [
+          "7",
+          "5",
+          "6",
+          "5",
+          "5"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SHORT_TERM__AVG_DAILY_SALES": {
+        "name": "SHORT_TERM__AVG_DAILY_SALES",
+        "data_type": "numeric",
+        "business_purpose": "Short-term sales baseline",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "27.51098413",
+          "38.92533333",
+          "78.63619048",
+          "15.8725",
+          "30.404"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LONG_TERM__AVG_DAILY_SALES": {
+        "name": "LONG_TERM__AVG_DAILY_SALES",
+        "data_type": "numeric",
+        "business_purpose": "Long-term sales baseline",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "30.44286735",
+          "30.12727211",
+          "69.23641983",
+          "9.183402818",
+          "25.0556"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SALES__PCT_CHANGE_WOW": {
+        "name": "SALES__PCT_CHANGE_WOW",
+        "data_type": "numeric",
+        "business_purpose": "Week-over-week sales growth",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 9,
+        "sample_values": [
+          "-0.2",
+          "-0.2",
+          "-0.4",
+          "-0.4",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SALES__PCT_CHANGE_SHORT_TERM": {
+        "name": "SALES__PCT_CHANGE_SHORT_TERM",
+        "data_type": "numeric",
+        "business_purpose": "Short-term sales trend",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "-0.6",
+          "-0.4",
+          "-0.4",
+          "-0.4",
+          "-0.4"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SALES__PCT_CHANGE_LONG_TERM": {
+        "name": "SALES__PCT_CHANGE_LONG_TERM",
+        "data_type": "numeric",
+        "business_purpose": "Long-term sales trend",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 12,
+        "sample_values": [
+          "-0.1",
+          "0.3",
+          "0.1",
+          "0.7",
+          "0.2"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKS_GROWING_RECENT": {
+        "name": "WEEKS_GROWING_RECENT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 7,
+        "sample_values": [
+          "3",
+          "4",
+          "3",
+          "5",
+          "2"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKS_DECLINING_RECENT": {
+        "name": "WEEKS_DECLINING_RECENT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 6,
+        "sample_values": [
+          "4",
+          "5",
+          "6",
+          "4",
+          "3"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LOCATION_HEALTH_STATUS": {
+        "name": "LOCATION_HEALTH_STATUS",
+        "data_type": "categorical",
+        "business_purpose": "Overall location performance classification",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 2,
+        "sample_values": [
+          "RECENT_DECLINE",
+          "RECENT_DECLINE",
+          "RECENT_DECLINE",
+          "RECENT_DECLINE",
+          "RECENT_DECLINE"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SALES_TREND__PRIORITY_SCORE": {
+        "name": "SALES_TREND__PRIORITY_SCORE",
+        "data_type": "numeric",
+        "business_purpose": "Location priority ranking",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 42,
+        "sample_values": [
+          "254",
+          "219",
+          "198",
+          "387",
+          "179"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__CUSTOMER_COUNT": {
+        "name": "NEW_ONETIME__CUSTOMER_COUNT",
+        "data_type": "numeric",
+        "business_purpose": "New customer acquisition",
+        "importance_tier": 2,
+        "completeness": 0.9795918367346939,
+        "unique_values": 7,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "8.0",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__CUSTOMER_COUNT": {
+        "name": "LESS_THAN_WEEKLY__CUSTOMER_COUNT",
+        "data_type": "numeric",
+        "business_purpose": "Occasional customer segment",
+        "importance_tier": 2,
+        "completeness": 0.9795918367346939,
+        "unique_values": 9,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "9.0",
+          "0.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__CUSTOMER_COUNT": {
+        "name": "WEEKLY_OR_MORE__CUSTOMER_COUNT",
+        "data_type": "numeric",
+        "business_purpose": "Loyal customer segment",
+        "importance_tier": 2,
+        "completeness": 0.9795918367346939,
+        "unique_values": 13,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "21.0",
+          "0.0",
+          "2.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__CUSTOMER_COUNT_KNOWN": {
+        "name": "NEW_ONETIME__CUSTOMER_COUNT_KNOWN",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 16,
+        "sample_values": [
+          "5.0",
+          "2.0",
+          "161.0",
+          "1.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__CUSTOMER_COUNT_KNOWN": {
+        "name": "LESS_THAN_WEEKLY__CUSTOMER_COUNT_KNOWN",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "5.0",
+          "0.0",
+          "222.0",
+          "1.0",
+          "2.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__CUSTOMER_COUNT_KNOWN": {
+        "name": "WEEKLY_OR_MORE__CUSTOMER_COUNT_KNOWN",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 16,
+        "sample_values": [
+          "2.0",
+          "0.0",
+          "50.0",
+          "0.0",
+          "2.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__TOTAL_SPEND": {
+        "name": "NEW_ONETIME__TOTAL_SPEND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 12,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "35.74",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__TOTAL_SPEND": {
+        "name": "LESS_THAN_WEEKLY__TOTAL_SPEND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 25,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "37.7",
+          "0.0",
+          "2.15"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__TOTAL_SPEND": {
+        "name": "WEEKLY_OR_MORE__TOTAL_SPEND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "2.39",
+          "0.0",
+          "207.08",
+          "0.0",
+          "20.39"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__AVG_SPEND": {
+        "name": "NEW_ONETIME__AVG_SPEND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 12,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "4.47",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__AVG_SPEND": {
+        "name": "LESS_THAN_WEEKLY__AVG_SPEND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 24,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "4.19",
+          "0.0",
+          "2.15"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__AVG_SPEND": {
+        "name": "WEEKLY_OR_MORE__AVG_SPEND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "2.39",
+          "0.0",
+          "9.86",
+          "0.0",
+          "10.2"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__AVG_TRANSACTIONS": {
+        "name": "NEW_ONETIME__AVG_TRANSACTIONS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 9,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "1.13",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__AVG_TRANSACTIONS": {
+        "name": "LESS_THAN_WEEKLY__AVG_TRANSACTIONS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 10,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "1.56",
+          "0.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__AVG_TRANSACTIONS": {
+        "name": "WEEKLY_OR_MORE__AVG_TRANSACTIONS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 21,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "2.29",
+          "0.0",
+          "3.5"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__AVG_PURCHASE_VALUE": {
+        "name": "NEW_ONETIME__AVG_PURCHASE_VALUE",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.22448979591836737,
+        "unique_values": 11,
+        "sample_values": [
+          "3.97",
+          "4.14",
+          "2.86",
+          "3.99",
+          "3.85"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__AVG_PURCHASE_VALUE": {
+        "name": "LESS_THAN_WEEKLY__AVG_PURCHASE_VALUE",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.4897959183673469,
+        "unique_values": 23,
+        "sample_values": [
+          "2.69",
+          "2.15",
+          "4.43",
+          "2.54",
+          "2.71"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__AVG_PURCHASE_VALUE": {
+        "name": "WEEKLY_OR_MORE__AVG_PURCHASE_VALUE",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.5510204081632653,
+        "unique_values": 27,
+        "sample_values": [
+          "2.39",
+          "4.31",
+          "2.91",
+          "4.49",
+          "1.99"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__AVG_PURCHASE_QUANTITY": {
+        "name": "NEW_ONETIME__AVG_PURCHASE_QUANTITY",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.22448979591836737,
+        "unique_values": 9,
+        "sample_values": [
+          "1.33",
+          "1.53",
+          "1.19",
+          "1.0",
+          "1.5"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__AVG_PURCHASE_QUANTITY": {
+        "name": "LESS_THAN_WEEKLY__AVG_PURCHASE_QUANTITY",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.4897959183673469,
+        "unique_values": 10,
+        "sample_values": [
+          "1.07",
+          "1.0",
+          "1.53",
+          "1.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__AVG_PURCHASE_QUANTITY": {
+        "name": "WEEKLY_OR_MORE__AVG_PURCHASE_QUANTITY",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.5510204081632653,
+        "unique_values": 18,
+        "sample_values": [
+          "1.0",
+          "1.54",
+          "1.57",
+          "1.59",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__PCT_APP_USERS": {
+        "name": "NEW_ONETIME__PCT_APP_USERS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 5,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "12.5",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__PCT_APP_USERS": {
+        "name": "LESS_THAN_WEEKLY__PCT_APP_USERS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.0",
+          "0.0",
+          "100.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__PCT_APP_USERS": {
+        "name": "WEEKLY_OR_MORE__PCT_APP_USERS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 6,
+        "sample_values": [
+          "100.0",
+          "0.0",
+          "4.76",
+          "0.0",
+          "100.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__PCT": {
+        "name": "NEW_ONETIME__PCT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 11,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.21",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__PCT": {
+        "name": "LESS_THAN_WEEKLY__PCT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 15,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.24",
+          "0.0",
+          "0.33"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__PCT": {
+        "name": "WEEKLY_OR_MORE__PCT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 17,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "0.55",
+          "0.0",
+          "0.67"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__REVENUE_SHARE": {
+        "name": "NEW_ONETIME__REVENUE_SHARE",
+        "data_type": "numeric",
+        "business_purpose": "New customer revenue contribution",
+        "importance_tier": 1,
+        "completeness": 0.9795918367346939,
+        "unique_values": 11,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.13",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__REVENUE_SHARE": {
+        "name": "LESS_THAN_WEEKLY__REVENUE_SHARE",
+        "data_type": "numeric",
+        "business_purpose": "Occasional customer revenue contribution",
+        "importance_tier": 1,
+        "completeness": 0.9795918367346939,
+        "unique_values": 20,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.13",
+          "0.0",
+          "0.1"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__REVENUE_SHARE": {
+        "name": "WEEKLY_OR_MORE__REVENUE_SHARE",
+        "data_type": "numeric",
+        "business_purpose": "Loyal customer revenue contribution",
+        "importance_tier": 1,
+        "completeness": 0.9795918367346939,
+        "unique_values": 18,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "0.74",
+          "0.0",
+          "0.9"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOTAL_ACTIVE_CUSTOMERS": {
+        "name": "TOTAL_ACTIVE_CUSTOMERS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 16,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "38.0",
+          "0.0",
+          "3.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOTAL_KNOWN_CUSTOMERS": {
+        "name": "TOTAL_KNOWN_CUSTOMERS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 32,
+        "sample_values": [
+          "12.0",
+          "2.0",
+          "433.0",
+          "2.0",
+          "5.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOTAL_SPEND": {
+        "name": "TOTAL_SPEND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "2.0",
+          "0.0",
+          "281.0",
+          "0.0",
+          "23.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "AVG_SPEND_PER_CUSTOMER": {
+        "name": "AVG_SPEND_PER_CUSTOMER",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 33,
+        "sample_values": [
+          "2.39",
+          "0.0",
+          "7.38",
+          "0.0",
+          "7.51"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "PCT_CUSTOMERS_ACTIVE_THIS_WEEK": {
+        "name": "PCT_CUSTOMERS_ACTIVE_THIS_WEEK",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 22,
+        "sample_values": [
+          "0.08",
+          "0.0",
+          "0.09",
+          "0.0",
+          "0.6"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "DOMINANT_CUSTOMER_SEGMENT": {
+        "name": "DOMINANT_CUSTOMER_SEGMENT",
+        "data_type": "categorical",
+        "business_purpose": "Primary customer behavior pattern",
+        "importance_tier": 2,
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "weekly_or_more",
+          "no_customers",
+          "weekly_or_more",
+          "no_customers",
+          "weekly_or_more"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LAG_WEEK_FOR_RETENTION": {
+        "name": "LAG_WEEK_FOR_RETENTION",
+        "data_type": "categorical",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 1,
+        "sample_values": [
+          "4/27/2025",
+          "4/27/2025",
+          "4/27/2025",
+          "4/27/2025",
+          "4/27/2025"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__RETENTION_12W": {
+        "name": "NEW_ONETIME__RETENTION_12W",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.8367346938775511,
+        "unique_values": 15,
+        "sample_values": [
+          "0.14",
+          "0.0",
+          "0.07",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__RETENTION_12W": {
+        "name": "LESS_THAN_WEEKLY__RETENTION_12W",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9387755102040817,
+        "unique_values": 25,
+        "sample_values": [
+          "0.5",
+          "0.27",
+          "0.0",
+          "0.5",
+          "0.4"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__RETENTION_12W": {
+        "name": "WEEKLY_OR_MORE__RETENTION_12W",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.7142857142857143,
+        "unique_values": 16,
+        "sample_values": [
+          "1.0",
+          "0.89",
+          "1.0",
+          "0.76",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__COHORT_SIZE_12W": {
+        "name": "NEW_ONETIME__COHORT_SIZE_12W",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.8367346938775511,
+        "unique_values": 19,
+        "sample_values": [
+          "7.0",
+          "2.0",
+          "169.0",
+          "1.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__COHORT_SIZE_12W": {
+        "name": "LESS_THAN_WEEKLY__COHORT_SIZE_12W",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9387755102040817,
+        "unique_values": 26,
+        "sample_values": [
+          "4.0",
+          "235.0",
+          "1.0",
+          "2.0",
+          "2621.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__COHORT_SIZE_12W": {
+        "name": "WEEKLY_OR_MORE__COHORT_SIZE_12W",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.7142857142857143,
+        "unique_values": 14,
+        "sample_values": [
+          "2.0",
+          "37.0",
+          "1.0",
+          "1056.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__RETENTION_PRIOR_3W_AVG": {
+        "name": "NEW_ONETIME__RETENTION_PRIOR_3W_AVG",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.8571428571428572,
+        "unique_values": 16,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.07",
+          "0.0",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__RETENTION_PRIOR_3W_AVG": {
+        "name": "LESS_THAN_WEEKLY__RETENTION_PRIOR_3W_AVG",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9387755102040817,
+        "unique_values": 25,
+        "sample_values": [
+          "0.5",
+          "0.27",
+          "0.0",
+          "0.5",
+          "0.42"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__RETENTION_PRIOR_3W_AVG": {
+        "name": "WEEKLY_OR_MORE__RETENTION_PRIOR_3W_AVG",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.7959183673469388,
+        "unique_values": 16,
+        "sample_values": [
+          "1.0",
+          "0.83",
+          "1.0",
+          "0.77",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__WEEKS_WITH_DATA": {
+        "name": "NEW_ONETIME__WEEKS_WITH_DATA",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 3,
+        "sample_values": [
+          "3.0",
+          "3.0",
+          "3.0",
+          "3.0",
+          "3.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__WEEKS_WITH_DATA": {
+        "name": "LESS_THAN_WEEKLY__WEEKS_WITH_DATA",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 3,
+        "sample_values": [
+          "3.0",
+          "0.0",
+          "3.0",
+          "3.0",
+          "3.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__WEEKS_WITH_DATA": {
+        "name": "WEEKLY_OR_MORE__WEEKS_WITH_DATA",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "3.0",
+          "0.0",
+          "3.0",
+          "0.0",
+          "3.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "NEW_ONETIME__RETENTION_TREND_PCT_CHANGE": {
+        "name": "NEW_ONETIME__RETENTION_TREND_PCT_CHANGE",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.36734693877551017,
+        "unique_values": 13,
+        "sample_values": [
+          "0.04",
+          "-0.11",
+          "-0.19",
+          "-0.25",
+          "-1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "LESS_THAN_WEEKLY__RETENTION_TREND_PCT_CHANGE": {
+        "name": "LESS_THAN_WEEKLY__RETENTION_TREND_PCT_CHANGE",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.7959183673469388,
+        "unique_values": 19,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.0",
+          "-0.05",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "WEEKLY_OR_MORE__RETENTION_TREND_PCT_CHANGE": {
+        "name": "WEEKLY_OR_MORE__RETENTION_TREND_PCT_CHANGE",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.6734693877551021,
+        "unique_values": 16,
+        "sample_values": [
+          "0.0",
+          "0.07",
+          "0.0",
+          "-0.01",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "HAS_CURRENT_WEEK_DATA": {
+        "name": "HAS_CURRENT_WEEK_DATA",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 1,
+        "sample_values": [
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "HAS_RETENTION_DATA": {
+        "name": "HAS_RETENTION_DATA",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 1,
+        "sample_values": [
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "HAS_SUFFICIENT_PRIOR_DATA": {
+        "name": "HAS_SUFFICIENT_PRIOR_DATA",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 2,
+        "sample_values": [
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "OVERALL__PCT_APP_USERS": {
+        "name": "OVERALL__PCT_APP_USERS",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "0.1",
+          "0.0",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP1__CATEGORY": {
+        "name": "TOP1__CATEGORY",
+        "data_type": "categorical",
+        "business_purpose": "Best-performing product category",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "Carbonated Soft Drinks",
+          "Salted Snacks",
+          "Carbonated Soft Drinks",
+          "Carbonated Soft Drinks",
+          "Carbonated Soft Drinks"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP1__SALES_PCT": {
+        "name": "TOP1__SALES_PCT",
+        "data_type": "numeric",
+        "business_purpose": "Top category sales concentration",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "0.5",
+          "0.4",
+          "0.2",
+          "0.5",
+          "0.3"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP1__WOW_TREND": {
+        "name": "TOP1__WOW_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "0.177396781",
+          "-0.129086137",
+          "-0.219753828",
+          "0.758231421",
+          "0.520179372"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP1__ST_TREND": {
+        "name": "TOP1__ST_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.262101858",
+          "-0.029900332",
+          "-0.372222222",
+          "0.06784745",
+          "-0.260027285"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP1__LT_TREND": {
+        "name": "TOP1__LT_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.371879229",
+          "-0.150718399",
+          "-0.436370783",
+          "0.27871376",
+          "-0.278723404"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP2__CATEGORY": {
+        "name": "TOP2__CATEGORY",
+        "data_type": "categorical",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "Salted Snacks",
+          "UNKNOWN",
+          "Salted Snacks",
+          "Salted Snacks",
+          "Salted Snacks"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP2__SALES_PCT": {
+        "name": "TOP2__SALES_PCT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 3,
+        "sample_values": [
+          "0.3",
+          "0.3",
+          "0.2",
+          "0.3",
+          "0.2"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP2__WOW_TREND": {
+        "name": "TOP2__WOW_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "0.203703704",
+          "-0.34482047",
+          "-0.452478892",
+          "-0.166942149",
+          "0.13022942"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP2__ST_TREND": {
+        "name": "TOP2__ST_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.433551198",
+          "-0.168848168",
+          "-0.326475582",
+          "0.146105742",
+          "-0.185707341"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP2__LT_TREND": {
+        "name": "TOP2__LT_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.485694101",
+          "-0.251708697",
+          "-0.373137103",
+          "0.071912801",
+          "-0.19548511"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP3__CATEGORY": {
+        "name": "TOP3__CATEGORY",
+        "data_type": "categorical",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 6,
+        "sample_values": [
+          "UNKNOWN",
+          "Carbonated Soft Drinks",
+          "UNKNOWN",
+          "UNKNOWN",
+          "UNKNOWN"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP3__SALES_PCT": {
+        "name": "TOP3__SALES_PCT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 3,
+        "sample_values": [
+          "0.1",
+          "0.3",
+          "0.2",
+          "0.1",
+          "0.1"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP3__WOW_TREND": {
+        "name": "TOP3__WOW_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.137931034",
+          "0.509944751",
+          "-0.200503778",
+          "-0.385142857",
+          "-0.607873408"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP3__ST_TREND": {
+        "name": "TOP3__ST_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.611680646",
+          "1.075564838",
+          "-0.526829885",
+          "0.064819396",
+          "-0.518939394"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP3__LT_TREND": {
+        "name": "TOP3__LT_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.748958176",
+          "0.619315657",
+          "-0.466118554",
+          "-0.329908143",
+          "-0.506945708"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP4__CATEGORY": {
+        "name": "TOP4__CATEGORY",
+        "data_type": "categorical",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9387755102040817,
+        "unique_values": 12,
+        "sample_values": [
+          "Water",
+          "Pastry",
+          "Energy Drinks",
+          "Pastry",
+          "Juice"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP4__SALES_PCT": {
+        "name": "TOP4__SALES_PCT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 3,
+        "sample_values": [
+          "0.0",
+          "0.1",
+          "0.2",
+          "0.1",
+          "0.1"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP4__WOW_TREND": {
+        "name": "TOP4__WOW_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 48,
+        "sample_values": [
+          "-0.641689373",
+          "-0.5215311",
+          "-0.424251194",
+          "1.0",
+          "-0.301523657"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP4__ST_TREND": {
+        "name": "TOP4__ST_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.612808244",
+          "-0.07550077",
+          "-0.430167198",
+          "1.098360656",
+          "0.115236876"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP4__LT_TREND": {
+        "name": "TOP4__LT_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.689858491",
+          "-0.160692429",
+          "-0.415572732",
+          "1.119205298",
+          "-0.060156461"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP5__CATEGORY": {
+        "name": "TOP5__CATEGORY",
+        "data_type": "categorical",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9387755102040817,
+        "unique_values": 12,
+        "sample_values": [
+          "Tea",
+          "Frozen Foods",
+          "Candy",
+          "Energy Drinks",
+          "Juice"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP5__SALES_PCT": {
+        "name": "TOP5__SALES_PCT",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 2,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.1",
+          "0.0",
+          "0.1"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP5__WOW_TREND": {
+        "name": "TOP5__WOW_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 43,
+        "sample_values": [
+          "0.0",
+          "-0.578595318",
+          "-0.151118385",
+          "-0.334545455",
+          "1.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP5__ST_TREND": {
+        "name": "TOP5__ST_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 48,
+        "sample_values": [
+          "-0.555555556",
+          "-0.951029926",
+          "-0.2559474",
+          "-0.338753388",
+          "0.0"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP5__LT_TREND": {
+        "name": "TOP5__LT_TREND",
+        "data_type": "numeric",
+        "business_purpose": "",
+        "importance_tier": 3,
+        "completeness": 0.9795918367346939,
+        "unique_values": 48,
+        "sample_values": [
+          "-0.416666667",
+          "-0.951029926",
+          "-0.38235586",
+          "-0.338753388",
+          "0.066666667"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOTAL_ACTIVE_CATEGORIES": {
+        "name": "TOTAL_ACTIVE_CATEGORIES",
+        "data_type": "numeric",
+        "business_purpose": "Product category diversity",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 15,
+        "sample_values": [
+          "6",
+          "6",
+          "11",
+          "5",
+          "10"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "TOP5__CATEGORY_SALES_CONCENTRATION": {
+        "name": "TOP5__CATEGORY_SALES_CONCENTRATION",
+        "data_type": "numeric",
+        "business_purpose": "Top categories sales concentration",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 47,
+        "sample_values": [
+          "0.974705152",
+          "0.988751082",
+          "0.798787361",
+          "1.0",
+          "0.757456248"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SEED1__NAME": {
+        "name": "SEED1__NAME",
+        "data_type": "text",
+        "business_purpose": "Top product by sales rank",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 25,
+        "sample_values": [
+          "Ruffles Queso Flavored Chips (2.125oz)",
+          "Reeses Sticks (1.5oz)",
+          "Celsius Sparkling Peach Vibe (12oz)",
+          "Diet Coke (20oz)",
+          "Reeses Sticks (1.5oz)"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SEED1__RANK": {
+        "name": "SEED1__RANK",
+        "data_type": "numeric",
+        "business_purpose": "Top product sales ranking",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 12,
+        "sample_values": [
+          "8",
+          "3",
+          "2",
+          "1",
+          "2"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "REC1__NAME": {
+        "name": "REC1__NAME",
+        "data_type": "categorical",
+        "business_purpose": "Primary inventory recommendation",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 22,
+        "sample_values": [
+          "Big Mama Pickled Sausage (2.4oz)",
+          "Lays Munchies Peanut Butter Toast Cracker (1.42oz)",
+          "Karma Blueberry Lemonade Wellness Water (18oz)",
+          "Lays Wavy Hickory BBQ (1.5oz)",
+          "Lays Munchies Peanut Butter Toast Cracker (1.42oz)"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "REC1__SCORE": {
+        "name": "REC1__SCORE",
+        "data_type": "numeric",
+        "business_purpose": "Primary recommendation confidence",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 16,
+        "sample_values": [
+          "71.5",
+          "81.5",
+          "71.5",
+          "67.0",
+          "81.5"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SEED2__NAME": {
+        "name": "SEED2__NAME",
+        "data_type": "text",
+        "business_purpose": "Second top product by sales rank",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 28,
+        "sample_values": [
+          "Dole/Ocean Spray 100% Apple Juice (15.2oz)",
+          "Nut Harvest Whole Cashews (2.25oz)",
+          "Diet Dr Pepper (20oz)",
+          "Nut Harvest Whole Cashews (2.25oz)",
+          "Glaceau Smart Water (20oz)"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "SEED2__RANK": {
+        "name": "SEED2__RANK",
+        "data_type": "numeric",
+        "business_purpose": "Second product sales ranking",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 17,
+        "sample_values": [
+          "9",
+          "5",
+          "9",
+          "2",
+          "6"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "REC2__NAME": {
+        "name": "REC2__NAME",
+        "data_type": "categorical",
+        "business_purpose": "Secondary inventory recommendation",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 22,
+        "sample_values": [
+          "Lays Wavy Hickory BBQ (1.5oz)",
+          "Big Mama Pickled Sausage (2.4oz)",
+          "Mrs. Freshleys Apple Pie (4.5oz)",
+          "Big Mama Pickled Sausage (2.4oz)",
+          "Monster Mean Bean Java (15oz)"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "REC2__SCORE": {
+        "name": "REC2__SCORE",
+        "data_type": "numeric",
+        "business_purpose": "Secondary recommendation confidence",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 18,
+        "sample_values": [
+          "68.6666675",
+          "75.5",
+          "68.0",
+          "75.5",
+          "66.5"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "DROP1__NAME": {
+        "name": "DROP1__NAME",
+        "data_type": "text",
+        "business_purpose": "Primary drop candidate",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 41,
+        "sample_values": [
+          "Doritos Reduced Fat Wild White Nacho (1oz)",
+          "Dots Homestyle Pretzels (1.5oz)",
+          "Lays Kettle Cooked Reduced Fat Smoky BBQ (1.375oz)",
+          "Hersheys Cookies n Cream (1.55oz)",
+          "Tic Tac Chewy Fruit Adventure (1.8oz)"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "DROP1__RANK": {
+        "name": "DROP1__RANK",
+        "data_type": "numeric",
+        "business_purpose": "Drop candidate sales ranking",
+        "importance_tier": 1,
+        "completeness": 1.0,
+        "unique_values": 45,
+        "sample_values": [
+          "94",
+          "82",
+          "204",
+          "58",
+          "84"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "DROP2__NAME": {
+        "name": "DROP2__NAME",
+        "data_type": "text",
+        "business_purpose": "Secondary drop candidate",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 42,
+        "sample_values": [
+          "Tic Tac Chewy Fruit Adventure (1.8oz)",
+          "Gatorade Lemon Lime (20oz)",
+          "Baby Ruth (2.1oz)",
+          "Rolo (1.7oz)",
+          "Lance Toastchee Peanut Butter Cheese Crackers (1.52oz)"
+        ],
+        "business_rules": [],
+        "relationships": []
+      },
+      "DROP2__RANK": {
+        "name": "DROP2__RANK",
+        "data_type": "numeric",
+        "business_purpose": "Secondary drop candidate ranking",
+        "importance_tier": 2,
+        "completeness": 1.0,
+        "unique_values": 43,
+        "sample_values": [
+          "93",
+          "80",
+          "201",
+          "57",
+          "80"
+        ],
+        "business_rules": [],
+        "relationships": []
+      }
+    },
+    "data_quality_score": 0.7536030341340076,
+    "business_context_available": true,
+    "confidence_score": 0.5617482391186563
+  },
+  "analysis_result": {
+    "timestamp": "2025-07-26T12:29:30.599543",
+    "condition": "4_enhanced_guidance",
+    "question": "Which of my locations need immediate attention and what specific actions should I take?",
+    "data_files": [
+      "C:\\Users\\justin.olds\\OneDrive - 365 Retail Markets\\Documents\\llm_scenario_test\\data\\curated\\mart_llm_curated_location_compact_min.csv"
+    ],
+    "data_shape": [
+      49,
+      113
+    ],
+    "schema_enrichment": {
+      "total_fields": 113,
+      "quality_score": 0.7536030341340076,
+      "confidence_score": 0.5617482391186563,
+      "business_context_available": true
+    },
+    "response": "Based on the provided data, I'll generate a comprehensive analysis focusing on immediate actions needed for location performance optimization.\n\nKEY INSIGHTS:\n1. CRITICAL ATTENTION NEEDED: GE North location shows severe sales decline (-40% vs short-term baseline) despite high volume ($4,601 weekly)\n2. WIDESPREAD DECLINE: 10 of 14 locations show recent declining performance vs short-term baselines\n3. PRODUCT MIX ISSUES: High concentration in carbonated beverages and snacks across declining locations\n\nHIGH PRIORITY LOCATIONS:\n\n1. GE NORTH (Greenville, SC)\n- PERFORMANCE CONTEXT:\n  - Current weekly sales: $4,601\n  - Daily average: $828 vs $1,369 short-term baseline (-40%)\n  - Transaction count: 1,117 (current week)\n- PRODUCT RECOMMENDATIONS:\n  - ADD: 5 Hour Energy Extra Strength Grape (1.93oz) - Score: 69.0\n  - ADD: Mrs. Freshleys Apple Pie (4.5oz) - Score: 62.8\n  - DROP: Keebler Toast Peanut Butter Cracker (1.8oz)\n  - DROP: Generic Fruit category items\n\n2. ADIDAS DC-2 SHIPPING (Spartanburg, SC)\n- PERFORMANCE CONTEXT:\n  - Current weekly sales: $856\n  - Daily average: $133 vs $181 short-term baseline (-27%)\n  - Transaction count: 343 (current week)\n- PRODUCT RECOMMENDATIONS:\n  - ADD: Dole/Ocean Spray 100% Apple Juice (15.2oz) - Score: 75.1\n  - ADD: Big Mama Pickled Sausage (2.4oz) - Score: 64.0\n  - DROP: Cheetos Cheddar Jalapeno (2oz)\n  - DROP: Deli Express BBQ Deluxe\n\nACTIONABLE RECOMMENDATIONS:\n\n1. [HIGH] Immediate Product Resets\n- Action: Execute recommended product swaps at GE North and Adidas DC-2\n- Timeline: This week\n- Focus: Remove identified DROP items and replace with recommended ADD items\n\n2. [HIGH] Inventory Optimization\n- Action: Reduce carbonated beverage inventory at declining locations\n- Timeline: This week\n- Focus: Locations showing >30% category concentration\n\n3. [MEDIUM] Category Balance Adjustment\n- Action: Increase variety in snack offerings at top priority locations\n- Timeline: This week\n- Focus: Locations with >40% sales in single category\n\nTHIS WEEK'S ACTIONS:\n1. Remove underperforming products identified in DROP lists\n2. Add recommended products with high recommendation scores\n3. Adjust par levels for carbonated beverages at declining locations\n4. Implement product resets at GE North and Adidas DC-2 first\n\nLIMITATIONS:\n- Analysis based on recent sales trends only\n- Customer segment data incomplete for some locations\n- Limited visibility into external factors affecting performance\n\nDATA QUALITY NOTES:\n- Confidence Score: 0.56\n- Data Quality Score: 0.75\n- Some locations missing customer segment data\n- Transaction data complete for all locations\n\nNEXT STEPS:\n1. Execute recommended product changes immediately\n2. Monitor daily sales at GE North and Adidas DC-2\n3. Track performance of newly added products\n\nThis analysis focuses solely on immediate, actionable steps based on available data, prioritizing product mix optimization and inventory adjustments that can be implemented this week.",
+    "token_usage": {
+      "input": 12388,
+      "output": 821,
+      "total": 13209
+    }
+  },
+  "comparison_with_condition_3": {
+    "comparison_available": false,
+    "message": "No Condition 3 JSON results found"
+  }
+}

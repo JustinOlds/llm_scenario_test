@@ -1,0 +1,117 @@
+# Multi-Prompt Agent Configuration
+# Enhanced Guidance System Settings
+
+# Pipeline Configuration
+pipeline:
+  stages:
+    schema_discovery:
+      enabled: true
+      max_tokens: 2000
+      temperature: 0.1
+      timeout: 60
+      
+    question_analysis:
+      enabled: true
+      max_tokens: 1500
+      temperature: 0.1
+      timeout: 45
+      
+    data_filtering:
+      enabled: true
+      max_tokens: 1000
+      temperature: 0.0
+      timeout: 30
+      
+    output_generation:
+      enabled: true
+      max_tokens: 4000
+      temperature: 0.2
+      timeout: 90
+
+# Data Filtering Parameters
+data_filtering:
+  # Maximum number of rows to include in final analysis
+  max_rows: 25
+  
+  # Filtering strategy weights (must sum to 1.0)
+  selection_weights:
+    representative: 0.4    # Rows that best represent question characteristics
+    priority_score: 0.4    # Business-defined priority metrics
+    sales_volume: 0.2      # High-performing locations
+  
+  # Minimum thresholds
+  min_priority_score: 100
+  min_sales_volume: 500
+  
+  # Representative selection criteria
+  representative_criteria:
+    - geographic_diversity
+    - performance_variance
+    - category_mix
+    - trend_patterns
+
+# Enhanced Guidance Settings
+enhanced_guidance:
+  # Schema discovery depth
+  schema_analysis:
+    include_business_rules: true
+    include_data_quality: true
+    include_relationships: true
+    
+  # Question type identification
+  question_types:
+    supported:
+      - performance_analysis
+      - location_comparison
+      - trend_identification
+      - recommendation_generation
+      - root_cause_analysis
+    
+    unsupported:
+      - predictive_modeling
+      - customer_segmentation
+      - inventory_optimization
+  
+  # Business context integration
+  business_context:
+    org_benchmarks: true
+    global_benchmarks: true
+    industry_standards: false  # Not available yet
+    seasonal_adjustments: false  # Future enhancement
+
+# Output Format Specifications
+output_format:
+  # Machine-readable intermediate outputs
+  intermediate:
+    format: "json"
+    include_metadata: true
+    include_confidence: true
+    
+  # Human-readable final output
+  final:
+    format: "structured_text"
+    include_visualizations: false  # Future enhancement
+    include_action_items: true
+    max_recommendations: 10
+
+# API Configuration
+api:
+  model: "claude-3-5-sonnet-20241022"
+  max_tokens: 4000
+  temperature: 0.1
+  timeout: 120
+
+# Performance Monitoring
+monitoring:
+  track_token_usage: true
+  track_response_time: true
+  track_data_quality: true
+  save_intermediate_results: true
+  
+# Logging Configuration
+logging:
+  level: "INFO"
+  save_logs: true
+  log_file: "agent_pipeline.log"
+  include_responses: true
+  save_intermediate: true

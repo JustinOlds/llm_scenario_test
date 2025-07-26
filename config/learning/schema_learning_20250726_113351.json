@@ -1,0 +1,1479 @@
+{
+  "timestamp": "2025-07-26T11:33:51.130756",
+  "insights": {
+    "new_fields": [
+      {
+        "field_name": "LOCATION_NAME",
+        "data_type": "text",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "Polydeck Building 2",
+          "Milliken Redwood DC",
+          "Toray Admin",
+          "ADUSA",
+          "CF Sauer warehouse 4"
+        ]
+      },
+      {
+        "field_name": "CITY",
+        "data_type": "categorical",
+        "completeness": 0.8979591836734694,
+        "unique_values": 10,
+        "sample_values": [
+          "Spartanburg",
+          "Duncan",
+          "Moore",
+          "Duncan",
+          "Greenville"
+        ]
+      },
+      {
+        "field_name": "STATE",
+        "data_type": "categorical",
+        "completeness": 0.9387755102040817,
+        "unique_values": 1,
+        "sample_values": [
+          "SC",
+          "SC",
+          "SC",
+          "SC",
+          "SC"
+        ]
+      },
+      {
+        "field_name": "ORG_NAME",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 1,
+        "sample_values": [
+          "CanteenGreenville",
+          "CanteenGreenville",
+          "CanteenGreenville",
+          "CanteenGreenville",
+          "CanteenGreenville"
+        ]
+      },
+      {
+        "field_name": "REPORT_WEEK",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 1,
+        "sample_values": [
+          "7/13/2025",
+          "7/13/2025",
+          "7/13/2025",
+          "7/13/2025",
+          "7/13/2025"
+        ]
+      },
+      {
+        "field_name": "CURRENT_WEEK__SALES",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 48,
+        "sample_values": [
+          "71",
+          "114",
+          "257",
+          "43",
+          "88"
+        ]
+      },
+      {
+        "field_name": "CURRENT_WEEK__AVG_DAILY_SALES",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 42,
+        "sample_values": [
+          "11",
+          "25",
+          "47",
+          "9",
+          "19"
+        ]
+      },
+      {
+        "field_name": "CURRENT_WEEK__TRANSACTIONS",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 46,
+        "sample_values": [
+          "31",
+          "44",
+          "71",
+          "12",
+          "42"
+        ]
+      },
+      {
+        "field_name": "CURRENT_WEEK__OPERATION_DAYS",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 5,
+        "sample_values": [
+          "7",
+          "5",
+          "6",
+          "5",
+          "5"
+        ]
+      },
+      {
+        "field_name": "SHORT_TERM__AVG_DAILY_SALES",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "27.51098413",
+          "38.92533333",
+          "78.63619048",
+          "15.8725",
+          "30.404"
+        ]
+      },
+      {
+        "field_name": "LONG_TERM__AVG_DAILY_SALES",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "30.44286735",
+          "30.12727211",
+          "69.23641983",
+          "9.183402818",
+          "25.0556"
+        ]
+      },
+      {
+        "field_name": "SALES__PCT_CHANGE_WOW",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 9,
+        "sample_values": [
+          "-0.2",
+          "-0.2",
+          "-0.4",
+          "-0.4",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "SALES__PCT_CHANGE_SHORT_TERM",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "-0.6",
+          "-0.4",
+          "-0.4",
+          "-0.4",
+          "-0.4"
+        ]
+      },
+      {
+        "field_name": "SALES__PCT_CHANGE_LONG_TERM",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 12,
+        "sample_values": [
+          "-0.1",
+          "0.3",
+          "0.1",
+          "0.7",
+          "0.2"
+        ]
+      },
+      {
+        "field_name": "WEEKS_GROWING_RECENT",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 7,
+        "sample_values": [
+          "3",
+          "4",
+          "3",
+          "5",
+          "2"
+        ]
+      },
+      {
+        "field_name": "WEEKS_DECLINING_RECENT",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 6,
+        "sample_values": [
+          "4",
+          "5",
+          "6",
+          "4",
+          "3"
+        ]
+      },
+      {
+        "field_name": "LOCATION_HEALTH_STATUS",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 2,
+        "sample_values": [
+          "RECENT_DECLINE",
+          "RECENT_DECLINE",
+          "RECENT_DECLINE",
+          "RECENT_DECLINE",
+          "RECENT_DECLINE"
+        ]
+      },
+      {
+        "field_name": "SALES_TREND__PRIORITY_SCORE",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 42,
+        "sample_values": [
+          "254",
+          "219",
+          "198",
+          "387",
+          "179"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__CUSTOMER_COUNT",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 7,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "8.0",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__CUSTOMER_COUNT",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 9,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "9.0",
+          "0.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__CUSTOMER_COUNT",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 13,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "21.0",
+          "0.0",
+          "2.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__CUSTOMER_COUNT_KNOWN",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 16,
+        "sample_values": [
+          "5.0",
+          "2.0",
+          "161.0",
+          "1.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__CUSTOMER_COUNT_KNOWN",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "5.0",
+          "0.0",
+          "222.0",
+          "1.0",
+          "2.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__CUSTOMER_COUNT_KNOWN",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 16,
+        "sample_values": [
+          "2.0",
+          "0.0",
+          "50.0",
+          "0.0",
+          "2.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__TOTAL_SPEND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 12,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "35.74",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__TOTAL_SPEND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 25,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "37.7",
+          "0.0",
+          "2.15"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__TOTAL_SPEND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "2.39",
+          "0.0",
+          "207.08",
+          "0.0",
+          "20.39"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__AVG_SPEND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 12,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "4.47",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__AVG_SPEND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 24,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "4.19",
+          "0.0",
+          "2.15"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__AVG_SPEND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "2.39",
+          "0.0",
+          "9.86",
+          "0.0",
+          "10.2"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__AVG_TRANSACTIONS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 9,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "1.13",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__AVG_TRANSACTIONS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 10,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "1.56",
+          "0.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__AVG_TRANSACTIONS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 21,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "2.29",
+          "0.0",
+          "3.5"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__AVG_PURCHASE_VALUE",
+        "data_type": "numeric",
+        "completeness": 0.22448979591836737,
+        "unique_values": 11,
+        "sample_values": [
+          "3.97",
+          "4.14",
+          "2.86",
+          "3.99",
+          "3.85"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__AVG_PURCHASE_VALUE",
+        "data_type": "numeric",
+        "completeness": 0.4897959183673469,
+        "unique_values": 23,
+        "sample_values": [
+          "2.69",
+          "2.15",
+          "4.43",
+          "2.54",
+          "2.71"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__AVG_PURCHASE_VALUE",
+        "data_type": "numeric",
+        "completeness": 0.5510204081632653,
+        "unique_values": 27,
+        "sample_values": [
+          "2.39",
+          "4.31",
+          "2.91",
+          "4.49",
+          "1.99"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__AVG_PURCHASE_QUANTITY",
+        "data_type": "numeric",
+        "completeness": 0.22448979591836737,
+        "unique_values": 9,
+        "sample_values": [
+          "1.33",
+          "1.53",
+          "1.19",
+          "1.0",
+          "1.5"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__AVG_PURCHASE_QUANTITY",
+        "data_type": "numeric",
+        "completeness": 0.4897959183673469,
+        "unique_values": 10,
+        "sample_values": [
+          "1.07",
+          "1.0",
+          "1.53",
+          "1.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__AVG_PURCHASE_QUANTITY",
+        "data_type": "numeric",
+        "completeness": 0.5510204081632653,
+        "unique_values": 18,
+        "sample_values": [
+          "1.0",
+          "1.54",
+          "1.57",
+          "1.59",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__PCT_APP_USERS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 5,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "12.5",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__PCT_APP_USERS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.0",
+          "0.0",
+          "100.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__PCT_APP_USERS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 6,
+        "sample_values": [
+          "100.0",
+          "0.0",
+          "4.76",
+          "0.0",
+          "100.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__PCT",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 11,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.21",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__PCT",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 15,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.24",
+          "0.0",
+          "0.33"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__PCT",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 17,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "0.55",
+          "0.0",
+          "0.67"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__REVENUE_SHARE",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 11,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.13",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__REVENUE_SHARE",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 20,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.13",
+          "0.0",
+          "0.1"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__REVENUE_SHARE",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 18,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "0.74",
+          "0.0",
+          "0.9"
+        ]
+      },
+      {
+        "field_name": "TOTAL_ACTIVE_CUSTOMERS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 16,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "38.0",
+          "0.0",
+          "3.0"
+        ]
+      },
+      {
+        "field_name": "TOTAL_KNOWN_CUSTOMERS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 32,
+        "sample_values": [
+          "12.0",
+          "2.0",
+          "433.0",
+          "2.0",
+          "5.0"
+        ]
+      },
+      {
+        "field_name": "TOTAL_SPEND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 28,
+        "sample_values": [
+          "2.0",
+          "0.0",
+          "281.0",
+          "0.0",
+          "23.0"
+        ]
+      },
+      {
+        "field_name": "AVG_SPEND_PER_CUSTOMER",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 33,
+        "sample_values": [
+          "2.39",
+          "0.0",
+          "7.38",
+          "0.0",
+          "7.51"
+        ]
+      },
+      {
+        "field_name": "PCT_CUSTOMERS_ACTIVE_THIS_WEEK",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 22,
+        "sample_values": [
+          "0.08",
+          "0.0",
+          "0.09",
+          "0.0",
+          "0.6"
+        ]
+      },
+      {
+        "field_name": "DOMINANT_CUSTOMER_SEGMENT",
+        "data_type": "categorical",
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "weekly_or_more",
+          "no_customers",
+          "weekly_or_more",
+          "no_customers",
+          "weekly_or_more"
+        ]
+      },
+      {
+        "field_name": "LAG_WEEK_FOR_RETENTION",
+        "data_type": "categorical",
+        "completeness": 0.9795918367346939,
+        "unique_values": 1,
+        "sample_values": [
+          "4/27/2025",
+          "4/27/2025",
+          "4/27/2025",
+          "4/27/2025",
+          "4/27/2025"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__RETENTION_12W",
+        "data_type": "numeric",
+        "completeness": 0.8367346938775511,
+        "unique_values": 15,
+        "sample_values": [
+          "0.14",
+          "0.0",
+          "0.07",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__RETENTION_12W",
+        "data_type": "numeric",
+        "completeness": 0.9387755102040817,
+        "unique_values": 25,
+        "sample_values": [
+          "0.5",
+          "0.27",
+          "0.0",
+          "0.5",
+          "0.4"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__RETENTION_12W",
+        "data_type": "numeric",
+        "completeness": 0.7142857142857143,
+        "unique_values": 16,
+        "sample_values": [
+          "1.0",
+          "0.89",
+          "1.0",
+          "0.76",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__COHORT_SIZE_12W",
+        "data_type": "numeric",
+        "completeness": 0.8367346938775511,
+        "unique_values": 19,
+        "sample_values": [
+          "7.0",
+          "2.0",
+          "169.0",
+          "1.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__COHORT_SIZE_12W",
+        "data_type": "numeric",
+        "completeness": 0.9387755102040817,
+        "unique_values": 26,
+        "sample_values": [
+          "4.0",
+          "235.0",
+          "1.0",
+          "2.0",
+          "2621.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__COHORT_SIZE_12W",
+        "data_type": "numeric",
+        "completeness": 0.7142857142857143,
+        "unique_values": 14,
+        "sample_values": [
+          "2.0",
+          "37.0",
+          "1.0",
+          "1056.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__RETENTION_PRIOR_3W_AVG",
+        "data_type": "numeric",
+        "completeness": 0.8571428571428572,
+        "unique_values": 16,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.07",
+          "0.0",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__RETENTION_PRIOR_3W_AVG",
+        "data_type": "numeric",
+        "completeness": 0.9387755102040817,
+        "unique_values": 25,
+        "sample_values": [
+          "0.5",
+          "0.27",
+          "0.0",
+          "0.5",
+          "0.42"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__RETENTION_PRIOR_3W_AVG",
+        "data_type": "numeric",
+        "completeness": 0.7959183673469388,
+        "unique_values": 16,
+        "sample_values": [
+          "1.0",
+          "0.83",
+          "1.0",
+          "0.77",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__WEEKS_WITH_DATA",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 3,
+        "sample_values": [
+          "3.0",
+          "3.0",
+          "3.0",
+          "3.0",
+          "3.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__WEEKS_WITH_DATA",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 3,
+        "sample_values": [
+          "3.0",
+          "0.0",
+          "3.0",
+          "3.0",
+          "3.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__WEEKS_WITH_DATA",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "3.0",
+          "0.0",
+          "3.0",
+          "0.0",
+          "3.0"
+        ]
+      },
+      {
+        "field_name": "NEW_ONETIME__RETENTION_TREND_PCT_CHANGE",
+        "data_type": "numeric",
+        "completeness": 0.36734693877551017,
+        "unique_values": 13,
+        "sample_values": [
+          "0.04",
+          "-0.11",
+          "-0.19",
+          "-0.25",
+          "-1.0"
+        ]
+      },
+      {
+        "field_name": "LESS_THAN_WEEKLY__RETENTION_TREND_PCT_CHANGE",
+        "data_type": "numeric",
+        "completeness": 0.7959183673469388,
+        "unique_values": 19,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.0",
+          "-0.05",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "WEEKLY_OR_MORE__RETENTION_TREND_PCT_CHANGE",
+        "data_type": "numeric",
+        "completeness": 0.6734693877551021,
+        "unique_values": 16,
+        "sample_values": [
+          "0.0",
+          "0.07",
+          "0.0",
+          "-0.01",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "HAS_CURRENT_WEEK_DATA",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 1,
+        "sample_values": [
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "HAS_RETENTION_DATA",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 1,
+        "sample_values": [
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "HAS_SUFFICIENT_PRIOR_DATA",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 2,
+        "sample_values": [
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "OVERALL__PCT_APP_USERS",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 4,
+        "sample_values": [
+          "1.0",
+          "0.0",
+          "0.1",
+          "0.0",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "TOP1__CATEGORY",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "Carbonated Soft Drinks",
+          "Salted Snacks",
+          "Carbonated Soft Drinks",
+          "Carbonated Soft Drinks",
+          "Carbonated Soft Drinks"
+        ]
+      },
+      {
+        "field_name": "TOP1__SALES_PCT",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "0.5",
+          "0.4",
+          "0.2",
+          "0.5",
+          "0.3"
+        ]
+      },
+      {
+        "field_name": "TOP1__WOW_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "0.177396781",
+          "-0.129086137",
+          "-0.219753828",
+          "0.758231421",
+          "0.520179372"
+        ]
+      },
+      {
+        "field_name": "TOP1__ST_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.262101858",
+          "-0.029900332",
+          "-0.372222222",
+          "0.06784745",
+          "-0.260027285"
+        ]
+      },
+      {
+        "field_name": "TOP1__LT_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.371879229",
+          "-0.150718399",
+          "-0.436370783",
+          "0.27871376",
+          "-0.278723404"
+        ]
+      },
+      {
+        "field_name": "TOP2__CATEGORY",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 4,
+        "sample_values": [
+          "Salted Snacks",
+          "UNKNOWN",
+          "Salted Snacks",
+          "Salted Snacks",
+          "Salted Snacks"
+        ]
+      },
+      {
+        "field_name": "TOP2__SALES_PCT",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 3,
+        "sample_values": [
+          "0.3",
+          "0.3",
+          "0.2",
+          "0.3",
+          "0.2"
+        ]
+      },
+      {
+        "field_name": "TOP2__WOW_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "0.203703704",
+          "-0.34482047",
+          "-0.452478892",
+          "-0.166942149",
+          "0.13022942"
+        ]
+      },
+      {
+        "field_name": "TOP2__ST_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.433551198",
+          "-0.168848168",
+          "-0.326475582",
+          "0.146105742",
+          "-0.185707341"
+        ]
+      },
+      {
+        "field_name": "TOP2__LT_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.485694101",
+          "-0.251708697",
+          "-0.373137103",
+          "0.071912801",
+          "-0.19548511"
+        ]
+      },
+      {
+        "field_name": "TOP3__CATEGORY",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 6,
+        "sample_values": [
+          "UNKNOWN",
+          "Carbonated Soft Drinks",
+          "UNKNOWN",
+          "UNKNOWN",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "field_name": "TOP3__SALES_PCT",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 3,
+        "sample_values": [
+          "0.1",
+          "0.3",
+          "0.2",
+          "0.1",
+          "0.1"
+        ]
+      },
+      {
+        "field_name": "TOP3__WOW_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.137931034",
+          "0.509944751",
+          "-0.200503778",
+          "-0.385142857",
+          "-0.607873408"
+        ]
+      },
+      {
+        "field_name": "TOP3__ST_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.611680646",
+          "1.075564838",
+          "-0.526829885",
+          "0.064819396",
+          "-0.518939394"
+        ]
+      },
+      {
+        "field_name": "TOP3__LT_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.748958176",
+          "0.619315657",
+          "-0.466118554",
+          "-0.329908143",
+          "-0.506945708"
+        ]
+      },
+      {
+        "field_name": "TOP4__CATEGORY",
+        "data_type": "categorical",
+        "completeness": 0.9387755102040817,
+        "unique_values": 12,
+        "sample_values": [
+          "Water",
+          "Pastry",
+          "Energy Drinks",
+          "Pastry",
+          "Juice"
+        ]
+      },
+      {
+        "field_name": "TOP4__SALES_PCT",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 3,
+        "sample_values": [
+          "0.0",
+          "0.1",
+          "0.2",
+          "0.1",
+          "0.1"
+        ]
+      },
+      {
+        "field_name": "TOP4__WOW_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 48,
+        "sample_values": [
+          "-0.641689373",
+          "-0.5215311",
+          "-0.424251194",
+          "1.0",
+          "-0.301523657"
+        ]
+      },
+      {
+        "field_name": "TOP4__ST_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.612808244",
+          "-0.07550077",
+          "-0.430167198",
+          "1.098360656",
+          "0.115236876"
+        ]
+      },
+      {
+        "field_name": "TOP4__LT_TREND",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 49,
+        "sample_values": [
+          "-0.689858491",
+          "-0.160692429",
+          "-0.415572732",
+          "1.119205298",
+          "-0.060156461"
+        ]
+      },
+      {
+        "field_name": "TOP5__CATEGORY",
+        "data_type": "categorical",
+        "completeness": 0.9387755102040817,
+        "unique_values": 12,
+        "sample_values": [
+          "Tea",
+          "Frozen Foods",
+          "Candy",
+          "Energy Drinks",
+          "Juice"
+        ]
+      },
+      {
+        "field_name": "TOP5__SALES_PCT",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 2,
+        "sample_values": [
+          "0.0",
+          "0.0",
+          "0.1",
+          "0.0",
+          "0.1"
+        ]
+      },
+      {
+        "field_name": "TOP5__WOW_TREND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 43,
+        "sample_values": [
+          "0.0",
+          "-0.578595318",
+          "-0.151118385",
+          "-0.334545455",
+          "1.0"
+        ]
+      },
+      {
+        "field_name": "TOP5__ST_TREND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 48,
+        "sample_values": [
+          "-0.555555556",
+          "-0.951029926",
+          "-0.2559474",
+          "-0.338753388",
+          "0.0"
+        ]
+      },
+      {
+        "field_name": "TOP5__LT_TREND",
+        "data_type": "numeric",
+        "completeness": 0.9795918367346939,
+        "unique_values": 48,
+        "sample_values": [
+          "-0.416666667",
+          "-0.951029926",
+          "-0.38235586",
+          "-0.338753388",
+          "0.066666667"
+        ]
+      },
+      {
+        "field_name": "TOTAL_ACTIVE_CATEGORIES",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 15,
+        "sample_values": [
+          "6",
+          "6",
+          "11",
+          "5",
+          "10"
+        ]
+      },
+      {
+        "field_name": "TOP5__CATEGORY_SALES_CONCENTRATION",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 47,
+        "sample_values": [
+          "0.974705152",
+          "0.988751082",
+          "0.798787361",
+          "1.0",
+          "0.757456248"
+        ]
+      },
+      {
+        "field_name": "SEED1__NAME",
+        "data_type": "text",
+        "completeness": 1.0,
+        "unique_values": 25,
+        "sample_values": [
+          "Ruffles Queso Flavored Chips (2.125oz)",
+          "Reeses Sticks (1.5oz)",
+          "Celsius Sparkling Peach Vibe (12oz)",
+          "Diet Coke (20oz)",
+          "Reeses Sticks (1.5oz)"
+        ]
+      },
+      {
+        "field_name": "SEED1__RANK",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 12,
+        "sample_values": [
+          "8",
+          "3",
+          "2",
+          "1",
+          "2"
+        ]
+      },
+      {
+        "field_name": "REC1__NAME",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 22,
+        "sample_values": [
+          "Big Mama Pickled Sausage (2.4oz)",
+          "Lays Munchies Peanut Butter Toast Cracker (1.42oz)",
+          "Karma Blueberry Lemonade Wellness Water (18oz)",
+          "Lays Wavy Hickory BBQ (1.5oz)",
+          "Lays Munchies Peanut Butter Toast Cracker (1.42oz)"
+        ]
+      },
+      {
+        "field_name": "REC1__SCORE",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 16,
+        "sample_values": [
+          "71.5",
+          "81.5",
+          "71.5",
+          "67.0",
+          "81.5"
+        ]
+      },
+      {
+        "field_name": "SEED2__NAME",
+        "data_type": "text",
+        "completeness": 1.0,
+        "unique_values": 28,
+        "sample_values": [
+          "Dole/Ocean Spray 100% Apple Juice (15.2oz)",
+          "Nut Harvest Whole Cashews (2.25oz)",
+          "Diet Dr Pepper (20oz)",
+          "Nut Harvest Whole Cashews (2.25oz)",
+          "Glaceau Smart Water (20oz)"
+        ]
+      },
+      {
+        "field_name": "SEED2__RANK",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 17,
+        "sample_values": [
+          "9",
+          "5",
+          "9",
+          "2",
+          "6"
+        ]
+      },
+      {
+        "field_name": "REC2__NAME",
+        "data_type": "categorical",
+        "completeness": 1.0,
+        "unique_values": 22,
+        "sample_values": [
+          "Lays Wavy Hickory BBQ (1.5oz)",
+          "Big Mama Pickled Sausage (2.4oz)",
+          "Mrs. Freshleys Apple Pie (4.5oz)",
+          "Big Mama Pickled Sausage (2.4oz)",
+          "Monster Mean Bean Java (15oz)"
+        ]
+      },
+      {
+        "field_name": "REC2__SCORE",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 18,
+        "sample_values": [
+          "68.6666675",
+          "75.5",
+          "68.0",
+          "75.5",
+          "66.5"
+        ]
+      },
+      {
+        "field_name": "DROP1__NAME",
+        "data_type": "text",
+        "completeness": 1.0,
+        "unique_values": 41,
+        "sample_values": [
+          "Doritos Reduced Fat Wild White Nacho (1oz)",
+          "Dots Homestyle Pretzels (1.5oz)",
+          "Lays Kettle Cooked Reduced Fat Smoky BBQ (1.375oz)",
+          "Hersheys Cookies n Cream (1.55oz)",
+          "Tic Tac Chewy Fruit Adventure (1.8oz)"
+        ]
+      },
+      {
+        "field_name": "DROP1__RANK",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 45,
+        "sample_values": [
+          "94",
+          "82",
+          "204",
+          "58",
+          "84"
+        ]
+      },
+      {
+        "field_name": "DROP2__NAME",
+        "data_type": "text",
+        "completeness": 1.0,
+        "unique_values": 42,
+        "sample_values": [
+          "Tic Tac Chewy Fruit Adventure (1.8oz)",
+          "Gatorade Lemon Lime (20oz)",
+          "Baby Ruth (2.1oz)",
+          "Rolo (1.7oz)",
+          "Lance Toastchee Peanut Butter Cheese Crackers (1.52oz)"
+        ]
+      },
+      {
+        "field_name": "DROP2__RANK",
+        "data_type": "numeric",
+        "completeness": 1.0,
+        "unique_values": 43,
+        "sample_values": [
+          "93",
+          "80",
+          "201",
+          "57",
+          "80"
+        ]
+      }
+    ],
+    "updated_statistics": [],
+    "potential_relationships": [],
+    "data_quality_insights": []
+  }
+}

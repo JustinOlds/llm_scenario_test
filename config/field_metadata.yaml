@@ -1,0 +1,300 @@
+# Field Metadata Configuration
+# Enhanced business context for retail location analysis
+# Updated with user-provided business definitions
+
+field_definitions:
+  # Core Location & Temporal Fields
+  LOCATION_NAME:
+    purpose: "Location identification and geographic analysis"
+    tier: 1
+    business_context: "Primary identifier for retail location analysis"
+    data_type: "text"
+    
+  CITY:
+    purpose: "Geographic market analysis"
+    tier: 2
+    business_context: "City-level market segmentation and regional performance comparison"
+    data_type: "categorical"
+    
+  STATE:
+    purpose: "Regional market analysis"
+    tier: 2
+    business_context: "State-level geographic segmentation for regional insights"
+    data_type: "categorical"
+    
+  ORG_NAME:
+    purpose: "Organizational segmentation"
+    tier: 2
+    business_context: "Organization-level performance grouping and benchmarking"
+    data_type: "categorical"
+    
+  REPORT_WEEK:
+    purpose: "Temporal reference point"
+    tier: 2
+    business_context: "Week identifier for time-series analysis and trend tracking"
+    data_type: "categorical"
+
+  # Sales Performance Fields
+  CURRENT_WEEK__SALES:
+    purpose: "Current week total sales"
+    tier: 1
+    business_context: "Total sales revenue for the current week. Use for absolute revenue context, not for trend calculations."
+    operational_context: "Show weekly total for revenue context (e.g., 'Weekly sales: $4,601') but use daily averages for trends"
+    data_type: "numeric"
+    
+  CURRENT_WEEK__AVG_DAILY_SALES:
+    purpose: "Current period daily sales rate"
+    tier: 1
+    business_context: "Average daily sales for current week, normalized for operational days. Primary metric for trend comparison."
+    operational_context: "CRITICAL: Use this for trend calculations (e.g., 'Daily avg: $657 vs Short-term: $660 (-0.4%)')"
+    data_type: "numeric"
+    
+  SHORT_TERM__AVG_DAILY_SALES:
+    purpose: "Short-term sales baseline"
+    tier: 1
+    business_context: "Recent period average daily sales for trend comparison. Used to calculate short-term performance changes."
+    operational_context: "CRITICAL: Always show this raw value when discussing trends (e.g., 'vs Short-term avg: $4,619 (-0.4%)')"
+    data_type: "numeric"
+    
+  LONG_TERM__AVG_DAILY_SALES:
+    purpose: "Long-term sales baseline"
+    tier: 1
+    business_context: "Historical average daily sales for seasonal and long-term trend analysis. Provides context for overall performance trajectory."
+    operational_context: "Show this value when discussing long-term context (e.g., 'vs Long-term avg: $4,200')"
+    data_type: "numeric"
+    
+  SALES__PCT_CHANGE_WOW:
+    purpose: "Week-over-week sales growth"
+    tier: 1
+    business_context: "Immediate sales momentum and short-term performance changes"
+    data_type: "numeric"
+    
+  SALES__PCT_CHANGE_SHORT_TERM:
+    purpose: "Short-term sales trend"
+    tier: 1
+    business_context: "Recent period sales growth trajectory"
+    data_type: "numeric"
+    
+  SALES__PCT_CHANGE_LONG_TERM:
+    purpose: "Long-term sales trend"
+    tier: 1
+    business_context: "Historical sales growth pattern and seasonal comparison"
+    data_type: "numeric"
+
+  # Location Health & Priority
+  LOCATION_HEALTH_STATUS:
+    purpose: "Overall location performance classification"
+    tier: 1
+    business_context: "High-level health indicator for prioritization and intervention decisions"
+    data_type: "categorical"
+    
+  SALES_TREND__PRIORITY_SCORE:
+    purpose: "Location priority ranking"
+    tier: 1
+    business_context: "Composite score for resource allocation and attention prioritization"
+    data_type: "numeric"
+
+  # Customer Segmentation & Behavior
+  NEW_ONETIME__CUSTOMER_COUNT:
+    purpose: "New customer acquisition"
+    tier: 2
+    business_context: "First-time customers for growth and acquisition analysis"
+    data_type: "numeric"
+    
+  LESS_THAN_WEEKLY__CUSTOMER_COUNT:
+    purpose: "Occasional customer segment"
+    tier: 2
+    business_context: "Infrequent customers for engagement and retention strategies"
+    data_type: "numeric"
+    
+  WEEKLY_OR_MORE__CUSTOMER_COUNT:
+    purpose: "Loyal customer segment"
+    tier: 2
+    business_context: "High-frequency customers representing core business value"
+    data_type: "numeric"
+    
+  DOMINANT_CUSTOMER_SEGMENT:
+    purpose: "Primary customer behavior pattern"
+    tier: 2
+    business_context: "Most prevalent customer frequency segment at location"
+    data_type: "categorical"
+
+  # Revenue Distribution
+  NEW_ONETIME__REVENUE_SHARE:
+    purpose: "New customer revenue contribution"
+    tier: 1
+    business_context: "Revenue percentage from first-time customers"
+    data_type: "numeric"
+    
+  LESS_THAN_WEEKLY__REVENUE_SHARE:
+    purpose: "Occasional customer revenue contribution"
+    tier: 1
+    business_context: "Revenue percentage from infrequent customers"
+    data_type: "numeric"
+    
+  WEEKLY_OR_MORE__REVENUE_SHARE:
+    purpose: "Loyal customer revenue contribution"
+    tier: 1
+    business_context: "Revenue percentage from high-frequency customers"
+    data_type: "numeric"
+
+  # Product Performance & Recommendations
+  TOP1__CATEGORY:
+    purpose: "Best-performing product category"
+    tier: 2
+    business_context: "Highest sales category for inventory and marketing focus"
+    data_type: "categorical"
+    
+  TOP1__SALES_PCT:
+    purpose: "Top category sales concentration"
+    tier: 1
+    business_context: "Revenue percentage from best-performing category"
+    data_type: "numeric"
+
+  # Inventory Optimization - Seeds, Recommendations, and Drops
+  SEED1__NAME:
+    purpose: "Top product by sales rank"
+    tier: 1
+    business_context: "Top product at location by sales rank - basis for recommendation analysis"
+    data_type: "text"
+    
+  SEED1__RANK:
+    purpose: "Top product sales ranking"
+    tier: 1
+    business_context: "Sales rank for seed1 top product at this location"
+    data_type: "numeric"
+    
+  REC1__NAME:
+    purpose: "Primary inventory recommendation"
+    tier: 1
+    business_context: "Recommended item to add to inventory based on match with Seed1 top product at location. Higher scores indicate stronger pairing data from other locations."
+    operational_context: "Immediate action: Contact distributor to add this product to next delivery"
+    data_type: "categorical"
+    
+  REC1__SCORE:
+    purpose: "Primary recommendation confidence"
+    tier: 1
+    business_context: "Recommendation Score based on global pairing data for Seed1 to Rec1. Scores above 70 indicate strong performance correlation."
+    operational_context: "Higher scores (70+) suggest prioritizing this product addition"
+    data_type: "numeric"
+    
+  SEED2__NAME:
+    purpose: "Second top product by sales rank"
+    tier: 2
+    business_context: "Second highest selling product at location - basis for secondary recommendations"
+    data_type: "text"
+    
+  SEED2__RANK:
+    purpose: "Second product sales ranking"
+    tier: 2
+    business_context: "Sales rank for seed2 product at this location"
+    data_type: "numeric"
+    
+  REC2__NAME:
+    purpose: "Secondary inventory recommendation"
+    tier: 2
+    business_context: "Recommended item to add to inventory based on match with Seed2 product at location"
+    data_type: "categorical"
+    
+  REC2__SCORE:
+    purpose: "Secondary recommendation confidence"
+    tier: 2
+    business_context: "Recommendation Score based on global pairing data for Seed2 to Rec2"
+    data_type: "numeric"
+    
+  DROP1__NAME:
+    purpose: "Primary drop candidate"
+    tier: 1
+    business_context: "Low sales product to consider dropping if space is needed. Represents poorest performing item at this location."
+    operational_context: "Immediate action: Remove from next restocking order or pull from shelves if space needed"
+    data_type: "text"
+    
+  DROP1__RANK:
+    purpose: "Drop candidate sales ranking"
+    tier: 1
+    business_context: "Drop1 sales rank (lowest at location but rank value depends on number of products at location). Higher ranks indicate worse performance."
+    operational_context: "Higher rank numbers (200+) suggest strong candidates for removal"
+    data_type: "numeric"
+    
+  DROP2__NAME:
+    purpose: "Secondary drop candidate"
+    tier: 2
+    business_context: "Second lowest sales product to consider dropping if additional space is needed"
+    data_type: "text"
+    
+  DROP2__RANK:
+    purpose: "Secondary drop candidate ranking"
+    tier: 2
+    business_context: "Drop2 sales rank (second lowest at location)"
+    data_type: "numeric"
+
+  # Product Concentration & Diversity
+  TOP5__CATEGORY_SALES_CONCENTRATION:
+    purpose: "Top categories sales concentration"
+    tier: 1
+    business_context: "Revenue concentration in top 5 categories - indicates product diversity"
+    data_type: "numeric"
+    
+  TOTAL_ACTIVE_CATEGORIES:
+    purpose: "Product category diversity"
+    tier: 2
+    business_context: "Number of active product categories - indicates inventory breadth"
+    data_type: "numeric"
+
+# Field Groupings for Analysis
+field_groups:
+  core_performance:
+    - LOCATION_NAME
+    - CURRENT_WEEK__SALES
+    - CURRENT_WEEK__AVG_DAILY_SALES
+    - SALES__PCT_CHANGE_WOW
+    - LOCATION_HEALTH_STATUS
+    - SALES_TREND__PRIORITY_SCORE
+    
+  customer_segments:
+    - NEW_ONETIME__CUSTOMER_COUNT
+    - LESS_THAN_WEEKLY__CUSTOMER_COUNT
+    - WEEKLY_OR_MORE__CUSTOMER_COUNT
+    - DOMINANT_CUSTOMER_SEGMENT
+    
+  revenue_distribution:
+    - NEW_ONETIME__REVENUE_SHARE
+    - LESS_THAN_WEEKLY__REVENUE_SHARE
+    - WEEKLY_OR_MORE__REVENUE_SHARE
+    
+  inventory_optimization:
+    - SEED1__NAME
+    - SEED1__RANK
+    - REC1__NAME
+    - REC1__SCORE
+    - DROP1__NAME
+    - DROP1__RANK
+    
+  product_performance:
+    - TOP1__CATEGORY
+    - TOP1__SALES_PCT
+    - TOP5__CATEGORY_SALES_CONCENTRATION
+    - TOTAL_ACTIVE_CATEGORIES
+
+# Analysis Priorities
+analysis_priorities:
+  tier_1_critical:
+    description: "Essential fields for immediate business decisions"
+    max_fields_in_context: 15
+    
+  tier_2_important:
+    description: "Important context fields for comprehensive analysis"
+    max_fields_in_context: 25
+    
+  tier_3_supplementary:
+    description: "Additional detail fields for deep-dive analysis"
+    max_fields_in_context: 50
+
+# Omit Fields (as specified by user)
+omit_fields:
+  - REC1_ID
+  - SEED2_ID
+  - REC2_ID
+  - SEED3_ID
+  - REC3_ID
+  - DROP1_ID
